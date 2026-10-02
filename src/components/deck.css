@@ -16,11 +16,97 @@
 }
 
 .deck__slide {
+  position: relative;
   min-height: 46vh;
+  max-height: 74vh;
+  overflow: auto;
   padding: 44px 48px;
   border: 1px solid var(--line);
   background: var(--ink-2);
+  font-size: calc(15px * var(--deck-scale, 1));
   animation: slideIn 0.4s var(--ease);
+}
+
+/* the spotlight mask lives on the stage so it never scrolls with the slide */
+.deck__stage {
+  position: relative;
+}
+
+.deck__spot {
+  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 150px at var(--mx, 50%) var(--my, 50%),
+    transparent 0 72px,
+    rgba(5, 7, 10, 0.84) 160px
+  );
+}
+
+.deck--spot .deck__spot {
+  display: block;
+}
+
+.deck--spot .deck__slide {
+  cursor: none;
+}
+
+/* --- full screen -------------------------------------------------------- */
+
+/* the page's grain and scanline overlays are outside this element, so projecting
+   full screen is deliberately the one clean surface — no CRT furniture */
+.deck:fullscreen {
+  background: var(--ink);
+  padding: 3vh 3vw 2vh;
+  gap: 14px;
+}
+
+.deck:fullscreen .deck__stage {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.deck:fullscreen .deck__slide {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+}
+
+.deck:fullscreen .deck__keys {
+  display: none;
+}
+
+.deck__ticks {
+  display: flex;
+  gap: 3px;
+}
+
+.deck__tick {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.deck__tick.is-past {
+  background: var(--line-hot);
+}
+
+/* a taller tick means that slide spends arrow presses on code reveals */
+.deck__tick.has-steps {
+  height: 5px;
+}
+
+.deck__tick.is-now {
+  background: var(--blue);
+  box-shadow: 0 0 10px var(--blue);
+}
+
+.deck__tick.has-steps.is-now {
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
 }
 
 @keyframes slideIn {
@@ -89,8 +175,115 @@
   background: none;
   padding: 0;
   color: #d7e2ec;
-  font-size: 14px;
+  font-size: 0.95em;
   line-height: 1.7;
+}
+
+.deck__slide table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.2em;
+  font-size: 0.94em;
+}
+
+.deck__slide th {
+  text-align: left;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blue);
+  border-bottom: 1px solid var(--line-hot);
+  padding: 9px 12px;
+}
+
+.deck__slide td {
+  border-bottom: 1px solid var(--line);
+  padding: 9px 12px;
+  color: #c3ceda;
+  vertical-align: top;
+}
+
+.deck__slide tbody tr:hover {
+  background: var(--ink-3);
+}
+
+.deck__slide img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1.2em;
+  border: 1px solid var(--line);
+}
+
+.deck__slide del {
+  color: var(--dim);
+  text-decoration-color: var(--red);
+}
+
+.deck__slide li > input[type='checkbox'] {
+  accent-color: var(--green);
+  margin-right: 8px;
+}
+
+.deck__slide li.task-list-item {
+  list-style: none;
+  margin-left: -1.1em;
+}
+
+/* --- code block --------------------------------------------------------- */
+
+.deck__code {
+  margin-bottom: 1.2em;
+  background: #04070b;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--blue);
+}
+
+.deck__code__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.deck__code__bar button {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line-hot);
+  padding: 4px 10px;
+  transition: color 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.deck__code__bar button:hover {
+  color: var(--ink);
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.deck__slide .deck__code pre {
+  border: 0;
+  background: none;
+  padding: 18px 20px;
+  margin: 0;
+}
+
+.deck__code__more {
+  display: block;
+  padding: 9px 20px;
+  border-top: 1px dashed var(--line);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
 }
 
 .deck__slide blockquote {
@@ -144,6 +337,142 @@
   font-size: 12px;
   letter-spacing: 0.16em;
   color: var(--dim);
+  text-align: center;
+}
+
+.deck__reveal {
+  display: block;
+  margin-top: 4px;
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.deck__tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.deck__tools button {
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+
+.deck__tools button:hover {
+  color: var(--paper);
+  border-color: var(--line-hot);
+}
+
+.deck__tools button[aria-pressed='true'] {
+  color: var(--ink);
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.deck__size {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.deck__size i {
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  min-width: 44px;
+  text-align: center;
+}
+
+.deck__keys {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+}
+
+/* --- outline ------------------------------------------------------------ */
+
+.deck__outline {
+  width: min(620px, 92vw);
+  max-height: 72vh;
+  padding: 0;
+  border: 1px solid var(--line-hot);
+  background: var(--ink-2);
+  color: var(--paper);
+}
+
+.deck__outline::backdrop {
+  background: rgba(5, 7, 10, 0.82);
+}
+
+.deck__outline__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.deck__outline__head button {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.deck__outline ol {
+  list-style: none;
+  max-height: 56vh;
+  overflow: auto;
+}
+
+.deck__outline button {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  width: 100%;
+  padding: 13px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.deck__outline button:hover {
+  background: var(--ink-3);
+  color: var(--green);
+}
+
+.deck__outline button.is-now {
+  color: var(--blue);
+  background: var(--ink-3);
+}
+
+.deck__outline i {
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+}
+
+.deck__outline b {
+  flex: 1;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.deck__outline em {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--green);
 }
 
 @media (max-width: 720px) {
