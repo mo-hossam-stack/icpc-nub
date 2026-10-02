@@ -128,9 +128,10 @@ Rules:
 - `---` on its own line separates slides. Everything else is markdown, rendered by
   **react-markdown + remark-gfm** (tables, fenced code, blockquotes, task lists all work).
   Raw HTML is **not** enabled, so nothing is ever injected into the DOM.
-- No file → the topic page shows a "No deck yet" state with the exact path to create. That
-  state is intentional, not an error. **Most topics do not have a deck yet** — they get written
-  one at a time.
+- No file → the topic page shows a student-facing "still being written" state. It must **never**
+  expose repo internals: no file paths, no `---`, no authoring instructions. That copy is for
+  members, not for whoever writes the deck — the deck recipe lives here instead. **Most topics do
+  not have a deck yet**, they get written one at a time.
 - `loadDeck` / `MarkdownSlide` / `useDeck` live in `src/lib/decks.tsx`. The player is
   `src/components/DeckPlayer.tsx` + `deck.css`, and is `React.lazy`-loaded so the markdown
   libraries never reach the home or level pages.
