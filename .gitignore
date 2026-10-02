@@ -8,5 +8,4 @@ dist-ssr
 .env
 .env.*
 !.env.example
-.netlify
 .vercel
