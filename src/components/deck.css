@@ -12,10 +12,7 @@
 .deck__hint {
   color: var(--muted);
   font-size: 14px;
-}
-
-.deck__hint code {
-  color: var(--green);
+  max-width: 44ch;
 }
 
 .deck__slide {
