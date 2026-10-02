@@ -22,8 +22,8 @@
   overflow: auto;
   padding: 44px 48px;
   border: 1px solid var(--line);
-  background: var(--ink-2);
-  font-size: calc(15px * var(--deck-scale, 1));
+  background: var(--bg);
+  font-size: calc(16px * var(--deck-scale, 1));
   animation: slideIn 0.4s var(--ease);
 }
 
@@ -32,6 +32,7 @@
   position: relative;
 }
 
+/* on white the mask has to be white, or it reads as a hole in the page */
 .deck__spot {
   display: none;
   position: absolute;
@@ -40,7 +41,7 @@
   background: radial-gradient(
     circle 150px at var(--mx, 50%) var(--my, 50%),
     transparent 0 72px,
-    rgba(5, 7, 10, 0.84) 160px
+    rgb(255 255 255 / 0.9) 160px
   );
 }
 
@@ -54,10 +55,8 @@
 
 /* --- full screen -------------------------------------------------------- */
 
-/* the page's grain and scanline overlays are outside this element, so projecting
-   full screen is deliberately the one clean surface — no CRT furniture */
 .deck:fullscreen {
-  background: var(--ink);
+  background: var(--bg);
   padding: 3vh 3vw 2vh;
   gap: 14px;
 }
@@ -72,6 +71,7 @@
   flex: 1;
   min-height: 0;
   max-height: none;
+  border: 0;
 }
 
 .deck:fullscreen .deck__keys {
@@ -87,7 +87,7 @@
   flex: 1;
   height: 2px;
   background: var(--line);
-  transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  transition: background 0.3s var(--ease);
 }
 
 .deck__tick.is-past {
@@ -99,14 +99,9 @@
   height: 5px;
 }
 
-.deck__tick.is-now {
-  background: var(--blue);
-  box-shadow: 0 0 10px var(--blue);
-}
-
+.deck__tick.is-now,
 .deck__tick.has-steps.is-now {
-  background: var(--green);
-  box-shadow: 0 0 10px var(--green);
+  background: var(--accent);
 }
 
 @keyframes slideIn {
@@ -117,30 +112,30 @@
 /* markdown inside a slide */
 .deck__slide h1,
 .deck__slide h2 {
-  font-size: clamp(26px, 3.6vw, 44px);
+  font-size: clamp(28px, 3.6vw, 46px);
   text-transform: uppercase;
   margin-bottom: 0.5em;
 }
 
 .deck__slide h3 {
   font-family: var(--f-mono);
-  font-size: 12px;
-  letter-spacing: 0.22em;
+  font-size: 13px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--blue);
+  color: var(--accent);
   margin: 1.6em 0 0.6em;
 }
 
 .deck__slide p {
   margin-bottom: 1em;
-  color: #c3ceda;
+  color: var(--fg);
   line-height: 1.7;
 }
 
 .deck__slide ul,
 .deck__slide ol {
   margin: 0 0 1.1em 1.1em;
-  color: #c3ceda;
+  color: var(--fg);
 }
 
 .deck__slide li {
@@ -149,24 +144,25 @@
 }
 
 .deck__slide li::marker {
-  color: var(--green);
+  color: var(--accent);
 }
 
 .deck__slide strong {
-  color: var(--paper);
+  color: var(--fg);
   font-weight: 700;
 }
 
 .deck__slide code {
   font-family: var(--f-mono);
   font-size: 0.92em;
-  color: var(--orange);
+  color: var(--accent);
 }
 
+/* code is mono on a light well — the one place a panel beats white */
 .deck__slide pre {
-  background: #04070b;
+  background: var(--bg-2);
   border: 1px solid var(--line);
-  border-left: 3px solid var(--blue);
+  border-left: 3px solid var(--accent);
   padding: 18px 20px;
   overflow-x: auto;
 }
@@ -174,7 +170,7 @@
 .deck__slide pre code {
   background: none;
   padding: 0;
-  color: #d7e2ec;
+  color: var(--fg);
   font-size: 0.95em;
   line-height: 1.7;
 }
@@ -189,10 +185,10 @@
 .deck__slide th {
   text-align: left;
   font-weight: 500;
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--blue);
+  color: var(--fg);
   border-bottom: 1px solid var(--line-hot);
   padding: 9px 12px;
 }
@@ -200,12 +196,12 @@
 .deck__slide td {
   border-bottom: 1px solid var(--line);
   padding: 9px 12px;
-  color: #c3ceda;
+  color: var(--fg);
   vertical-align: top;
 }
 
 .deck__slide tbody tr:hover {
-  background: var(--ink-3);
+  background: var(--bg-2);
 }
 
 .deck__slide img {
@@ -217,12 +213,12 @@
 }
 
 .deck__slide del {
-  color: var(--dim);
-  text-decoration-color: var(--red);
+  color: var(--muted);
+  text-decoration-color: var(--dim);
 }
 
 .deck__slide li > input[type='checkbox'] {
-  accent-color: var(--green);
+  accent-color: var(--accent);
   margin-right: 8px;
 }
 
@@ -235,9 +231,9 @@
 
 .deck__code {
   margin-bottom: 1.2em;
-  background: #04070b;
+  background: var(--bg-2);
   border: 1px solid var(--line);
-  border-left: 3px solid var(--blue);
+  border-left: 3px solid var(--accent);
 }
 
 .deck__code__bar {
@@ -247,15 +243,15 @@
   gap: 12px;
   padding: 7px 12px;
   border-bottom: 1px solid var(--line);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--dim);
 }
 
 .deck__code__bar button {
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
   border: 1px solid var(--line-hot);
@@ -264,9 +260,9 @@
 }
 
 .deck__code__bar button:hover {
-  color: var(--ink);
-  background: var(--green);
-  border-color: var(--green);
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .deck__slide .deck__code pre {
@@ -280,14 +276,14 @@
   display: block;
   padding: 9px 20px;
   border-top: 1px dashed var(--line);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--dim);
 }
 
 .deck__slide blockquote {
-  border-left: 3px solid var(--green);
+  border-left: 3px solid var(--accent);
   padding-left: 16px;
   color: var(--muted);
   font-style: italic;
@@ -295,8 +291,8 @@
 }
 
 .deck__slide a {
-  color: var(--blue);
-  border-bottom: 1px solid rgba(52, 156, 212, 0.4);
+  color: var(--accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
 .deck__slide hr {
@@ -314,18 +310,18 @@
 
 .deck__bar button {
   padding: 11px 20px;
-  border: 1px solid var(--line);
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  border: 1px solid var(--line-hot);
+  font-size: 12px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
   transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
 
 .deck__bar button:hover:not(:disabled) {
-  color: var(--ink);
-  background: var(--green);
-  border-color: var(--green);
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .deck__bar button:disabled {
@@ -334,8 +330,8 @@
 }
 
 .deck__bar span {
-  font-size: 12px;
-  letter-spacing: 0.16em;
+  font-size: 13px;
+  letter-spacing: 0.1em;
   color: var(--dim);
   text-align: center;
 }
@@ -344,10 +340,10 @@
   display: block;
   margin-top: 4px;
   font-style: normal;
-  font-size: 9px;
-  letter-spacing: 0.2em;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--accent);
 }
 
 .deck__tools {
@@ -359,23 +355,23 @@
 
 .deck__tools button {
   padding: 9px 14px;
-  border: 1px solid var(--line);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  border: 1px solid var(--line-hot);
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
   transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
 
 .deck__tools button:hover {
-  color: var(--paper);
-  border-color: var(--line-hot);
+  color: var(--fg);
+  border-color: var(--accent);
 }
 
 .deck__tools button[aria-pressed='true'] {
-  color: var(--ink);
-  background: var(--green);
-  border-color: var(--green);
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .deck__size {
@@ -387,16 +383,16 @@
 
 .deck__size i {
   font-style: normal;
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-size: 12px;
+  letter-spacing: 0.08em;
   color: var(--dim);
   min-width: 44px;
   text-align: center;
 }
 
 .deck__keys {
-  font-size: 10px;
-  letter-spacing: 0.14em;
+  font-size: 11px;
+  letter-spacing: 0.08em;
   color: var(--dim);
 }
 
@@ -407,12 +403,13 @@
   max-height: 72vh;
   padding: 0;
   border: 1px solid var(--line-hot);
-  background: var(--ink-2);
-  color: var(--paper);
+  background: var(--bg);
+  color: var(--fg);
 }
 
 .deck__outline::backdrop {
-  background: rgba(5, 7, 10, 0.82);
+  background: rgb(22 24 28 / 0.24);
+  backdrop-filter: blur(2px);
 }
 
 .deck__outline__head {
@@ -446,33 +443,33 @@
 }
 
 .deck__outline button:hover {
-  background: var(--ink-3);
-  color: var(--green);
+  background: var(--bg-2);
+  color: var(--accent);
 }
 
 .deck__outline button.is-now {
-  color: var(--blue);
-  background: var(--ink-3);
+  color: var(--accent);
+  background: var(--bg-2);
 }
 
 .deck__outline i {
   font-style: normal;
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 12px;
+  letter-spacing: 0.1em;
   color: var(--dim);
 }
 
 .deck__outline b {
   flex: 1;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .deck__outline em {
   font-style: normal;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
 }
 
 @media (max-width: 720px) {

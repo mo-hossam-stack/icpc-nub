@@ -35,7 +35,7 @@ export const levels: Level[] = [
     kicker: 'The Foundation',
     summary:
       'Everything you need before a single contest problem makes sense. C++ syntax, loops, arrays, strings, ad-hoc logic and the standard library.',
-    accent: '#349cd4',
+    accent: '#4f7a1e',
     released: true,
     topics: [
       {
@@ -101,7 +101,7 @@ export const levels: Level[] = [
     kicker: 'The Construction',
     summary:
       'Level 0 gave you the tools. Level 1 builds the algorithms on top of them — the standard toolkit for real contest problems.',
-    accent: '#84bc3c',
+    accent: '#4f7a1e',
     released: false,
     topics: [
       { id: 'binary-search', index: 0, title: 'Binary Search', blurb: 'Search on the answer, and on the space between.', tags: ['search'], status: 'locked', links: {} },

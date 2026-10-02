@@ -16,8 +16,6 @@ export default function App() {
   return (
     <>
       <div className="grain" />
-      <div className="scanlines" />
-      <div className="vignette" />
       <ScrollTop />
       <Nav />
       <Routes>

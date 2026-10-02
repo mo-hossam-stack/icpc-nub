@@ -9,7 +9,7 @@
   height: 100%;
   max-height: none;
   background: transparent;
-  color: var(--paper);
+  color: var(--fg);
   opacity: 0;
   transition: opacity 0.2s ease, overlay 0.2s allow-discrete, display 0.2s allow-discrete;
 }
@@ -21,8 +21,8 @@
 }
 
 .drawer::backdrop {
-  background: rgb(5 7 10 / 0.7);
-  backdrop-filter: blur(3px);
+  background: rgb(22 24 28 / 0.22);
+  backdrop-filter: blur(2px);
 }
 
 .drawer__panel {
@@ -30,9 +30,9 @@
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  background: var(--ink-2);
-  border-left: 1px solid var(--line-hot);
-  box-shadow: -30px 0 60px rgb(0 0 0 / 0.45);
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  box-shadow: -30px 0 60px rgb(22 24 28 / 0.1);
   transform: translateX(16px);
   transition: transform 0.2s ease;
 }
@@ -95,8 +95,8 @@
 }
 
 .drawer__x:hover {
-  border-color: var(--blue);
-  color: var(--paper);
+  border-color: var(--accent);
+  color: var(--fg);
 }
 
 /* ---- resource rows -------------------------------------------------- */
@@ -113,13 +113,13 @@
   gap: 4px 12px;
   padding: 15px 24px;
   text-decoration: none;
-  color: var(--paper);
+  color: var(--fg);
   border-bottom: 1px solid var(--line);
   transition: background 0.16s ease;
 }
 
 a.drawer__row:hover {
-  background: var(--ink-3);
+  background: var(--bg-2);
 }
 
 .drawer__row b {
@@ -133,9 +133,9 @@ a.drawer__row:hover {
 .drawer__row i {
   grid-column: 2;
   font-style: normal;
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
   min-width: 0;
@@ -146,11 +146,11 @@ a.drawer__row:hover {
   grid-row: 1;
   grid-column: 3;
   text-decoration: none;
-  color: var(--muted);
+  color: var(--dim);
 }
 
 a.drawer__row s {
-  color: var(--blue);
+  color: var(--accent);
 }
 
 /* placeholders still read as rows, but they are not links */
@@ -160,22 +160,16 @@ a.drawer__row s {
 }
 
 .drawer__row.is-empty .res-grid__dot {
-  background: var(--dim);
-  box-shadow: none;
-}
-
-/* the built-in deck is the one bright dot in the panel */
-.res-grid__dot--slides {
-  background: var(--paper);
-  box-shadow: 0 0 12px var(--paper);
+  background: none;
+  border-color: var(--line-hot);
 }
 
 .drawer__foot {
   padding: 18px 24px 30px;
   color: var(--dim);
-  font-family: var(--font-mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.1em;
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   line-height: 1.7;
 }

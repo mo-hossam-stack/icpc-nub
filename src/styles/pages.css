@@ -154,7 +154,7 @@
 /* ------------------------------------------------------------- roadmap */
 
 .roadmap {
-  background: var(--ink);
+  background: var(--bg-2);
 }
 
 .roadmap__head {
@@ -176,24 +176,42 @@
   display: flex;
   gap: 26px;
   justify-content: center;
+  flex-wrap: wrap;
   margin-top: 20px;
 }
 
 .roadmap__legend span {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  gap: 9px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
+/* state is the fill, not the hue: solid = open, dashed = locked, dotted = soon */
 .roadmap__legend i {
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  box-shadow: 0 0 10px currentColor;
+  border: 1px solid var(--line-hot);
+}
+
+.roadmap__legend .is-open {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.roadmap__legend .is-locked {
+  border-style: dashed;
+  border-color: var(--dim);
+}
+
+.roadmap__legend .is-soon {
+  border-style: dotted;
+  border-width: 2px;
+  border-color: var(--dim);
 }
 
 /* ---------------------------------------------------------------- level */
@@ -206,8 +224,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 12px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--dim);
   margin-bottom: 40px;
@@ -215,11 +233,11 @@
 }
 
 .crumbs a:hover {
-  color: var(--paper);
+  color: var(--fg);
 }
 
 .crumbs b {
-  color: var(--paper);
+  color: var(--fg);
   font-weight: 500;
 }
 
@@ -242,9 +260,7 @@
   font-weight: 800;
   font-size: clamp(70px, 12vw, 150px);
   line-height: 0.8;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--accent);
-  opacity: 0.55;
+  color: var(--accent);
 }
 
 .level__head h1 {
@@ -255,15 +271,15 @@
 .level__sum {
   max-width: 58ch;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 15.5px;
 }
 
 .level__badge {
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--dim);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-hot);
   padding: 7px 12px;
   white-space: nowrap;
 }
@@ -274,30 +290,25 @@
   align-items: flex-start;
   margin: 30px 0 10px;
   padding: 20px 24px;
-  border: 1px solid rgba(252, 148, 12, 0.28);
-  background: rgba(252, 148, 12, 0.05);
-  font-size: 13.5px;
-  color: #b9a68a;
+  border: 1px solid var(--line-hot);
+  background: var(--bg-2);
+  font-size: 14px;
+  color: var(--muted);
   max-width: 70ch;
 }
 
 .soon b {
-  color: var(--orange);
+  color: var(--fg);
 }
 
+/* an outlined dot, matching the "coming soon" node on the map */
 .soon__dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   margin-top: 7px;
   border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 14px var(--orange);
-  animation: blink 1.6s steps(2) infinite;
+  border: 2px dotted var(--accent);
   flex-shrink: 0;
-}
-
-@keyframes blink {
-  50% { opacity: 0.2; }
 }
 
 /* --------------------------------------------------------------- topics */
@@ -326,7 +337,7 @@
 }
 
 .topic > a:hover {
-  background: rgba(52, 156, 212, 0.05);
+  background: var(--bg-2);
 }
 
 .topic.is-locked {
@@ -365,7 +376,7 @@
 }
 
 .topics__main p {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--muted);
   max-width: 60ch;
 }
@@ -378,8 +389,8 @@
 }
 
 .topics__tags span {
-  font-size: 9.5px;
-  letter-spacing: 0.16em;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--dim);
   border: 1px solid var(--line);
@@ -392,31 +403,29 @@
 }
 
 .res {
-  font-size: 9px;
-  letter-spacing: 0.16em;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 5px 9px;
   border: 1px dashed var(--line-hot);
   color: var(--dim);
 }
 
+/* a filled border means the link is real; a dashed one means it is still a promise */
 .res.is-set {
   border-style: solid;
-  color: var(--paper);
-  border-color: var(--line-hot);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
-.res--session.is-set { color: var(--red); border-color: rgba(244, 76, 76, 0.4); }
-.res--sheet.is-set { color: var(--blue); border-color: rgba(52, 156, 212, 0.4); }
-.res--upsolve.is-set { color: var(--green); border-color: rgba(132, 188, 60, 0.4); }
-/* the built-in deck is the one bright chip in the row, as in the drawer */
-.res--slides.is-set { color: var(--paper); border-color: var(--paper); }
+/* the built-in deck is the one ink chip in the row, as in the drawer */
+.res--slides.is-set { color: var(--fg); border-color: var(--fg); }
 
 .topics__go {
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--fg);
   white-space: nowrap;
 }
 
@@ -442,7 +451,7 @@
 
 .topic__blurb {
   color: var(--muted);
-  font-size: 15px;
+  font-size: 15.5px;
   max-width: 56ch;
 }
 
@@ -476,14 +485,14 @@
   gap: 4px 14px;
   padding: 20px 22px;
   border: 1px solid var(--line);
-  background: var(--ink-2);
+  background: var(--bg);
   transition: border-color 0.35s var(--ease), transform 0.35s var(--ease), background 0.35s var(--ease);
 }
 
 a.res-card:hover {
-  border-color: var(--line-hot);
+  border-color: var(--accent);
   transform: translateY(-3px);
-  background: var(--ink-3);
+  background: var(--bg-2);
 }
 
 .res-card.is-empty {
@@ -492,27 +501,40 @@ a.res-card:hover {
 
 .res-grid__dot {
   grid-row: 1 / 3;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
+  border: 1px solid var(--line-hot);
 }
 
-.res-grid__dot--session { background: var(--red); box-shadow: 0 0 12px var(--red); }
-.res-grid__dot--sheet { background: var(--blue); box-shadow: 0 0 12px var(--blue); }
-.res-grid__dot--upsolve { background: var(--green); box-shadow: 0 0 12px var(--green); }
-.res-card.is-empty .res-grid__dot { background: var(--dim); box-shadow: none; }
+/* filled = the link exists, hollow = it is still coming. The label says which. */
+.res-grid__dot--session,
+.res-grid__dot--sheet,
+.res-grid__dot--upsolve {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.res-grid__dot--slides {
+  background: var(--fg);
+  border-color: var(--fg);
+}
+
+.res-card.is-empty .res-grid__dot {
+  background: none;
+  border-color: var(--line-hot);
+}
 
 .res-grid__label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--paper);
+  letter-spacing: 0.02em;
+  color: var(--fg);
 }
 
 .res-grid__note {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.06em;
   color: var(--dim);
 }
 

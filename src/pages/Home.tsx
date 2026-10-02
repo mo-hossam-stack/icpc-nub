@@ -70,9 +70,9 @@ export default function Home() {
           <Roadmap onOpen={(level, topic) => setPick({ level, topic })} />
         </div>
         <div className="roadmap__legend wrap">
-          <span><i style={{ background: '#349cd4' }} />Open</span>
-          <span><i style={{ background: '#f44c4c' }} />Locked</span>
-          <span><i style={{ background: '#fc940c' }} />Coming soon</span>
+          <span><i className="is-open" />Open</span>
+          <span><i className="is-locked" />Locked</span>
+          <span><i className="is-soon" />Coming soon</span>
         </div>
       </section>
 

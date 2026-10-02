@@ -77,7 +77,7 @@ levels: Level[]  ->  topics: Topic[]  ->  links: { session?, sheet?, upsolve? }
 ```
 
 - `status: 'open'` → clickable, `/level0/arrays` opens the deck.
-- `status: 'locked'` → rendered as a dead row / a wireframe red node. Not a link.
+- `status: 'locked'` → rendered as a dead row / a dashed, blurred node. Not a link.
 - `released: false` on a **level** → adds the "under construction" banner and the `SOON` badge
   in the nav.
 
@@ -85,8 +85,9 @@ levels: Level[]  ->  topics: Topic[]  ->  links: { session?, sheet?, upsolve? }
 The map, the level list, the nav, the stats and the crumbs all derive from this array.
 
 **To add a resource link:** put a URL in `topic.links.session` / `.sheet` / `.upsolve`. An
-absent or empty value renders as a "Link coming soon" card. The dot colours are fixed:
-session = red, sheet = blue, upsolve = green.
+absent or empty value renders as a "Link coming soon" card. The dot says whether the link
+exists, not which kind it is — **filled = live, hollow = still a promise**. The label beside
+it already names the kind, so there is no second colour to keep in sync.
 
 **To unlock a Level 1 topic:** flip `status` to `'open'`, and (optionally) set the level's
 `released` to `true` when the whole level is done.
@@ -158,7 +159,7 @@ The player shows **one slide at a time**, and the mentor is the one holding the 
 
 - `←` `→` or `space` — next. On a slide with code it spends presses on reveals first.
 - `F` — full screen. Press it before the room settles; the deck, not the page, goes
-  full screen, so the CRT overlays are deliberately absent on a projector.
+  full screen, so the chrome is deliberately absent on a projector.
 - `O` — outline overlay (`<dialog>`, so it gets the focus trap and Escape for free). Jump
   anywhere without stepping through. Global arrows are suppressed while it is open.
 - `P` — spotlight: a mask follows the mouse so the mentor can point at a line without walking
@@ -200,34 +201,37 @@ font files for its labels, and was the weakest surface on a phone.
 
 ## 7. Design language
 
-**"Oscilloscope / terminal blueprint."** Near-black canvas, phosphor glow, hairline grid,
-grain, scanlines, oversized condensed display type against small letter-spaced mono labels.
-The whole page is a CRT: `.grain`, `.scanlines` and `.vignette` are fixed overlays in `App.tsx`
-and must not be removed.
+**"Paper and ink."** White page, one accent, oversized condensed display type against small
+letter-spaced mono labels, and hairlines doing the structural work that glow used to do.
+`.grain` is the one piece of atmosphere left — a fixed overlay in `App.tsx`, barely there, so
+white does not read as flat. Scanlines and the vignette were cut: on a light page both just
+muddy the type, and the site is read as much as projected.
 
-Palette is sampled from `logo.jpg` and must not drift:
+The palette is **one accent on neutrals**. There are no second, third or fourth hues, so a new
+surface never needs a new colour — pick a grey. State (open / locked / soon, link live /
+promised) is carried by **fill and border style**, never by hue.
 
 | token | value | use |
 |-------|-------|-----|
-| `--ink` | `#05070a` | page background |
-| `--ink-2` `#0a0e14` `--ink-3` `#10151d` | | raised surfaces |
-| `--line` `--line-hot` | `#1c2530` `#2a3746` | hairlines, borders |
-| `--paper` | `#e8edf2` | primary text |
-| `--muted` `--dim` | `#7c8b9c` `#748396` | secondary / tertiary text |
-| `--green` | `#84bc3c` | upsolve, done, primary accent |
-| `--blue` | `#349cd4` | open nodes, sheet, structural lines |
-| `--red` | `#f44c4c` | locked, session video |
-| `--orange` | `#fc940c` | coming soon, inline code |
+| `--bg` | `#ffffff` | page |
+| `--bg-2` `--bg-3` | `#f7f7f5` `#efefec` | raised surfaces, hover, code wells |
+| `--line` `--line-hot` | `#e4e4e0` `#cdcdc7` | hairlines, borders |
+| `--fg` | `#16181c` | primary text |
+| `--muted` `--dim` | `#565f6b` `#656e7a` | secondary / tertiary text |
+| `--accent` | `#4f7a1e` | the logo green, darkened to clear 4.5:1 on white |
 
 Fonts: **Bricolage Grotesque** (display, 800, uppercase) + **JetBrains Mono** (everything
 else). Loaded from Google Fonts in `index.html`. Never substitute Inter/Roboto/system fonts.
 
-**Contrast bar:** every text colour must clear 4.5:1 on `--ink`, `--ink-2` *and* `--ink-3`.
-`--dim` was raised from `#4a5765` to `#748396` for this reason (2.7:1 → 4.7:1). Do not dim text
-with `opacity` on a parent — that silently breaks the ratio. Run Lighthouse before you ship.
+**Contrast bar:** every text colour must clear 4.5:1 on `--bg`, `--bg-2` *and* `--bg-3`, and
+white on `--accent` clears it too. Do not dim text with `opacity` on a parent — that silently
+breaks the ratio. Body copy is `font-weight: 400`; 300 was the old dark-canvas setting and
+is too thin to read on white. Check before you ship: Lighthouse, or the computed-contrast
+sweep over `/`, `/level0`, `/level0/conditions-and-loops`, `/level1` and a 404.
 
-Levels also carry their own `accent` (level0 = blue, level1 = green) exposed as the `--accent`
-CSS variable, so a new level can theme itself by adding one field.
+Levels carry their own `accent` exposed as the `--accent` CSS variable, so a new level can
+theme itself by adding one field. Both levels currently point at the same accent — that is the
+point, not an oversight; give one level its own hue only when there is a reason to.
 
 ## 8. Conventions
 

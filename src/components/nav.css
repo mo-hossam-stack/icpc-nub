@@ -7,8 +7,8 @@
   justify-content: space-between;
   gap: 20px;
   padding: 14px 28px;
-  background: rgba(5, 7, 10, 0.72);
-  backdrop-filter: blur(14px) saturate(140%);
+  background: rgb(255 255 255 / 0.82);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
 }
 
@@ -36,7 +36,7 @@
 }
 
 .nav__name b {
-  color: var(--green);
+  color: var(--accent);
   font-weight: 800;
 }
 
@@ -52,9 +52,9 @@
   align-items: center;
   gap: 7px;
   padding: 8px 15px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
   white-space: nowrap;
@@ -68,31 +68,32 @@
   right: 15px;
   bottom: 2px;
   height: 1px;
-  background: var(--accent, var(--green));
+  background: var(--accent, var(--accent));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s var(--ease);
 }
 
 .nav__link:hover {
-  color: var(--paper);
+  color: var(--fg);
 }
 
 .nav__link.is-on {
-  color: var(--paper);
+  color: var(--fg);
 }
 
 .nav__link.is-on::after {
   transform: scaleX(1);
 }
 
+/* "soon" is a fact, not a colour: a hairline chip in the same neutral as the label */
 .nav__lock {
   font-style: normal;
-  font-size: 9px;
-  letter-spacing: 0.1em;
+  font-size: 10px;
+  letter-spacing: 0.08em;
   padding: 2px 6px;
-  color: var(--orange);
-  border: 1px solid rgba(252, 148, 12, 0.35);
+  color: var(--dim);
+  border: 1px dashed var(--line-hot);
 }
 
 @media (max-width: 620px) {
