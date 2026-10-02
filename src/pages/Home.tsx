@@ -15,12 +15,7 @@ export default function Home() {
         <div className="wrap map__scroll">
           <Roadmap onOpen={(level, topic) => setPick({ level, topic })} />
         </div>
-        <div className="roadmap__legend wrap">
-          <span><i className="is-open" />Open</span>
-          <span><i className="is-locked" />Locked</span>
-          <span><i className="is-soon" />Coming soon</span>
-        </div>
-      </section>
+        </section>
 
       {/* a top-layer modal must not sit inside a .section, or the section's
           h2.display sizing leaks into the drawer's own heading */}

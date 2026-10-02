@@ -20,48 +20,6 @@
   margin-bottom: 30px;
 }
 
-.roadmap__legend {
-  display: flex;
-  gap: 26px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-.roadmap__legend span {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* state is the fill, not the hue: solid = open, dashed = locked, dotted = soon */
-.roadmap__legend i {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1px solid var(--line-hot);
-}
-
-.roadmap__legend .is-open {
-  background: var(--accent);
-  border-color: var(--accent);
-}
-
-.roadmap__legend .is-locked {
-  border-style: dashed;
-  border-color: var(--dim);
-}
-
-.roadmap__legend .is-soon {
-  border-style: dotted;
-  border-width: 2px;
-  border-color: var(--dim);
-}
-
 /* ---------------------------------------------------------------- level */
 
 .level {
