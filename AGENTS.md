@@ -58,7 +58,7 @@ npm run typecheck
 
 | Route | Page | What it is |
 |-------|------|-----------|
-| `/` | `Home` | Hero, the roadmap, the two level cards |
+| `/` | `Home` | The roadmap. No hero yet — the landing section is being rewritten |
 | `/:levelId` | `Level` | The topic list for a level, each row showing its 3 resources |
 | `/:levelId/:topicId` | `Topic` | Resource cards + the native slide deck |
 | anything else | `NotFound` | "Wrong turn" |
