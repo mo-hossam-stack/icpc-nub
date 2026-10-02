@@ -95,6 +95,7 @@ session = red, sheet = blue, upsolve = green.
 
 One markdown file per topic at `content/slides/<levelId>/<topicId>.md`. No build step, no
 front-matter, no front-end editor — drop in text, save, reload.
+`content/slides/_TEMPLATE.md` is the starting point; copy it and follow it.
 
 ```markdown
 # Arrays
@@ -127,22 +128,52 @@ Rules:
 
 - `---` on its own line separates slides. Everything else is markdown, rendered by
   **react-markdown + remark-gfm** (tables, fenced code, blockquotes, task lists all work).
-  Raw HTML is **not** enabled, so nothing is ever injected into the DOM.
+  Raw HTML is **not** enabled, so nothing is ever injected into the DOM — and `<kbd>` or any
+  other tag in a deck silently disappears. Use inline code for key names.
+- **The deck is built to be projected, not read.** One idea per slide, roughly a dozen lines,
+  and every slide starts with a heading — that heading is the label in the outline. If a slide
+  needs two ideas it needs two slides.
+- **A code line ending in `// [!]` is hidden until you press next.** Pressing next reveals that
+  line plus every line up to the next mark, so ask the room first and then walk the code
+  forward. Marks are stripped before rendering and before Copy. Several code blocks on one
+  slide share a single sequence.
 - No file → the topic page shows a student-facing "still being written" state. It must **never**
   expose repo internals: no file paths, no `---`, no authoring instructions. That copy is for
   members, not for whoever writes the deck — the deck recipe lives here instead. **Most topics do
   not have a deck yet**, they get written one at a time.
-- `loadDeck` / `MarkdownSlide` / `useDeck` live in `src/lib/decks.tsx`. The player is
-  `src/components/DeckPlayer.tsx` + `deck.css`, and is `React.lazy`-loaded so the markdown
-  libraries never reach the home or level pages.
+- `parseDeck` / `visibleUpTo` live in `src/lib/deckSource.ts` and are deliberately free of react
+  and of `import.meta.glob`, so `scripts/check-decks.mjs` can import the very same file. The
+  Vite-only layer (`import.meta.glob`, `loadDeck`, `useDeck`, `deckCounts`) is `src/lib/decks.ts`,
+  and the renderer is `src/lib/MarkdownSlide.tsx`. The player is `src/components/DeckPlayer.tsx`
+  + `deck.css`, and is `React.lazy`-loaded so the markdown libraries never reach the home or
+  level pages — keep it that way, or `Level.tsx`'s coverage chip will drag react-markdown in.
+- `npm run check:decks` runs first in `npm run build`. It lints every deck that exists (balanced
+  fences, non-zero slides, a heading on every slide, no file the roadmap doesn't know about) and
+  prints deck coverage. **A topic with no deck is not an error** — that is a normal state — so
+  only malformed decks fail the build.
 
-The player shows **one slide at a time**. That is the whole feature list: `←/→` or `Space`,
-plus Prev/Next buttons and an `n / total` counter. Do not add a grid view, fullscreen, swipe,
-progress bar or a per-slide URL — those were cut on purpose for simplicity. Revisit only if
-someone actually asks.
+### Driving it live
+
+The player shows **one slide at a time**, and the mentor is the one holding the clicker:
+
+- `←` `→` or `space` — next. On a slide with code it spends presses on reveals first.
+- `F` — full screen. Press it before the room settles; the deck, not the page, goes
+  full screen, so the CRT overlays are deliberately absent on a projector.
+- `O` — outline overlay (`<dialog>`, so it gets the focus trap and Escape for free). Jump
+  anywhere without stepping through. Global arrows are suppressed while it is open.
+- `P` — spotlight: a mask follows the mouse so the mentor can point at a line without walking
+  to the laptop. Off by default, so a student on their own laptop never sees it. The mask is on
+  `.deck__stage`, not the slide, so it does not drift when a long slide scrolls.
+- `[` `]` — text size, for the back row.
+- `Home` / `End` — first / last slide.
+- The tick strip is `n` segments; taller segments are slides that spend presses on reveals.
+
+Everything on the keyboard is also a real `<button>` with a label. There is still no grid view,
+swipe or per-slide URL — cut on purpose in §9. Revisit only if someone actually asks.
 
 **Markdown in slides is styled by descendant selectors under `.deck__slide`** — a new markdown
-element needs a rule there or it will render unstyled.
+element needs a rule there or it will render unstyled. `table`/`th`/`td`, `img`, `del` and GFM
+task lists are already covered.
 
 ## 6. The roadmap
 
@@ -220,8 +251,13 @@ Known ceilings. Do not "fix" them without being asked, and do not build around t
 - **No search.** 6 + 6 topics do not need it. Revisit past ~30.
 - **Slides are markdown, not a WYSIWYG editor.** Authoring in-repo is the whole point: a text
   file survives everything. An in-browser editor is a separate decision, not a missing feature.
-- **One slide at a time, no chrome.** No grid, no fullscreen, no per-slide routing. Keyboard
-  arrows plus Prev/Next is the whole player.
+- **No presenter notes channel.** The mentor drives a whiteboard site for live scribbling and
+  talking points, so `???`-style per-slide notes were cut. The deck shows only what the room sees.
+- **No syntax highlighting.** That would mean a new dependency (shiki/highlight.js) for colour
+  alone; code blocks are mono on near-black and stay that way until someone asks.
+- **One slide at a time, no chrome.** No grid, no per-slide routing. Keyboard arrows plus
+  Prev/Next plus the outline overlay is the whole player. Full screen was cut here too and then
+  asked for back — `F` is the native Fullscreen API on `.deck`, no dependency, no layout fork.
 - **`react-markdown` runs with raw HTML disabled**, so a malicious deck cannot inject
   markup. If decks ever become user-submitted, that is already handled — but there is still no
   per-user storage, so that would be the backend step.
