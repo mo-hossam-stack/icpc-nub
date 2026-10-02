@@ -1,0 +1,225 @@
+.map {
+  display: grid;
+  gap: 0;
+}
+
+.map__level {
+  padding: 28px 0;
+}
+
+.map__stage {
+  position: relative;
+  margin: 0 auto;
+}
+
+/* the ring is the widest thing; below that we scroll rather than shrink text */
+.map__stage--ring {
+  aspect-ratio: 16 / 11;
+  max-width: 720px;
+  min-width: 560px;
+}
+
+.map__stage--snake {
+  aspect-ratio: 16 / 5.2;
+  max-width: 720px;
+  min-width: 560px;
+}
+
+@media (max-width: 620px) {
+  .map__scroll {
+    overflow-x: auto;
+  }
+}
+
+.map__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.map__ring,
+.map__chain {
+  fill: none;
+  stroke: var(--line-hot);
+  stroke-width: 0.35;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.map__ring {
+  stroke: var(--blue);
+  opacity: 0.5;
+  stroke-dasharray: 2 2.5;
+  animation: map-spin 46s linear infinite;
+}
+
+.map__chain {
+  stroke: var(--green);
+  opacity: 0.32;
+  stroke-dasharray: 1.5 2.5;
+}
+
+/* ---- nodes ---------------------------------------------------------- */
+
+/* open nodes are buttons — clicking opens the drawer, it does not navigate */
+.map__node {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: 128px;
+  padding: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.18s ease;
+}
+
+.map__dot {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line-hot);
+  border-radius: 50%;
+  background: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  transition: border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.map__label {
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* open nodes are the only interactive thing in the map */
+button.map__node:hover,
+button.map__node:focus-visible {
+  color: var(--paper);
+}
+
+button.map__node:hover .map__dot,
+button.map__node:focus-visible .map__dot {
+  border-color: var(--blue);
+  color: var(--paper);
+  box-shadow: 0 0 0 4px rgb(52 156 212 / 0.14);
+}
+
+button.map__node:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* locked nodes are inert divs — keep them out of the tab order entirely */
+.map__node--locked {
+  cursor: default;
+}
+
+/* ---- centres -------------------------------------------------------- */
+
+.map__core,
+.map__soon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  text-align: center;
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+.map__core b,
+.map__soon b {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.map__core i,
+.map__soon i {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---- level 1: blurred, not clickable -------------------------------- */
+
+.map__locked {
+  position: absolute;
+  inset: 0;
+  filter: blur(2.6px);
+  opacity: 0.55;
+  pointer-events: none;
+  user-select: none;
+}
+
+.map__node--locked .map__dot {
+  border-style: dashed;
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.map__soon b {
+  color: var(--orange);
+}
+
+.map__soon i {
+  padding: 3px 9px;
+  border: 1px solid var(--orange);
+  border-radius: 999px;
+  color: var(--orange);
+  background: color-mix(in srgb, var(--orange) 10%, transparent);
+}
+
+/* ---- the chain between the two levels ------------------------------- */
+
+.map__link {
+  display: grid;
+  place-items: center;
+  height: 44px;
+}
+
+.map__link span {
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(var(--blue), var(--green));
+  opacity: 0.45;
+}
+
+@keyframes map-spin {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map__ring {
+    animation: none;
+  }
+}
