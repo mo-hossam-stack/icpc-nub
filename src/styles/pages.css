@@ -409,6 +409,8 @@
 .res--session.is-set { color: var(--red); border-color: rgba(244, 76, 76, 0.4); }
 .res--sheet.is-set { color: var(--blue); border-color: rgba(52, 156, 212, 0.4); }
 .res--upsolve.is-set { color: var(--green); border-color: rgba(132, 188, 60, 0.4); }
+/* the built-in deck is the one bright chip in the row, as in the drawer */
+.res--slides.is-set { color: var(--paper); border-color: var(--paper); }
 
 .topics__go {
   font-size: 10px;
