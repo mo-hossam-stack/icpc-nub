@@ -41,8 +41,9 @@ Current map: `binary-search`, `prefix-sum`, `two-pointers`, `sorting-advanced`, 
 - **No backend.** The site is fully static. Django is a *possible* future step for accounts,
   progress sync or an editor — nothing in the current architecture assumes it, and nothing
   requires it.
-- Deployed at the **domain root** on Netlify or Vercel. `netlify.toml` and `vercel.json` both
-  ship; `base` in `vite.config.ts` is `/`. Moving to a subfolder means changing `base` too.
+- Deployed at the **domain root** on **Vercel**. `vercel.json` ships the SPA rewrite and the
+  immutable cache header for hashed assets; `base` in `vite.config.ts` is `/`. Moving to a
+  subfolder means changing `base` too. Node is pinned via `engines.node` in `package.json`.
 
 ```bash
 npm run dev        # dev server
