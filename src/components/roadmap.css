@@ -1,221 +1,241 @@
-.map {
-  display: grid;
-  gap: 0;
-}
+/* The roadmap is one spine: a rail down the middle, a rung per topic,
+   alternating left and right. A level that is not released carries a
+   "coming soon" line under its name and is drawn blurred, dashed and inert,
+   so it reads as a promise rather than a door. */
 
-.map__level {
-  padding: 28px 0;
-}
-
-.map__stage {
+.spine {
   position: relative;
+  display: grid;
+  gap: 26px;
+  max-width: 900px;
   margin: 0 auto;
+  padding: 10px 0;
 }
 
-/* the ring is the widest thing; below that we scroll rather than shrink text */
-.map__stage--ring {
-  aspect-ratio: 16 / 11;
-  max-width: 720px;
-  min-width: 560px;
-}
-
-.map__stage--snake {
-  aspect-ratio: 16 / 5.2;
-  max-width: 720px;
-  min-width: 560px;
-}
-
-@media (max-width: 620px) {
-  .map__scroll {
-    overflow-x: auto;
-  }
-}
-
-.map__lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.map__ring,
-.map__chain {
-  fill: none;
-  stroke: var(--line-hot);
-  stroke-width: 0.35;
-  vector-effect: non-scaling-stroke;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.map__ring {
-  stroke: var(--accent);
-  opacity: 0.7;
-  stroke-dasharray: 2 2.5;
-  animation: map-spin 46s linear infinite;
-}
-
-.map__chain {
-  stroke: var(--dim);
-  opacity: 0.7;
-  stroke-dasharray: 1.5 2.5;
-}
-
-/* ---- nodes ---------------------------------------------------------- */
-
-/* open nodes are buttons — clicking opens the drawer, it does not navigate */
-.map__node {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  transform: translate(-50%, -50%);
-  display: grid;
-  justify-items: center;
-  gap: 8px;
-  width: 128px;
-  padding: 0;
-  background: none;
-  border: 0;
-  font: inherit;
-  text-align: center;
-  cursor: pointer;
-  color: var(--muted);
-  transition: color 0.18s ease;
-}
-
-.map__dot {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border: 1px solid var(--line-hot);
-  border-radius: 50%;
-  background: var(--bg);
-  font-family: var(--f-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--fg);
-  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
-}
-
-.map__label {
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  line-height: 1.4;
-  text-align: center;
-}
-
-/* open nodes are the only interactive thing in the map */
-button.map__node:hover,
-button.map__node:focus-visible {
-  color: var(--fg);
-}
-
-button.map__node:hover .map__dot,
-button.map__node:focus-visible .map__dot {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-
-button.map__node:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-/* locked nodes are inert divs — keep them out of the tab order entirely */
-.map__node--locked {
-  cursor: default;
-}
-
-/* ---- centres -------------------------------------------------------- */
-
-.map__core,
-.map__soon {
+/* the rail itself — one hairline for the whole path, drawn behind everything */
+.spine::before {
+  content: '';
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  text-align: center;
-  padding: 0 12px;
-  pointer-events: none;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line-hot);
 }
 
-.map__core b,
-.map__soon b {
+.spine__level {
+  display: grid;
+  gap: 18px;
+}
+
+/* ---- the level band: name, kicker, and the promise pill ----------------- */
+
+.spine__band {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+}
+
+.spine__band b {
   font-family: var(--f-display);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--fg);
 }
 
-.map__core i,
-.map__soon i {
-  font-family: var(--f-mono);
+.spine__band s {
+  padding: 3px 10px;
+  border: 1px dotted var(--dim);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--dim);
+}
+
+/* the band sits on the rail, so it has to mask it — in the section's own grey */
+.spine__band::before {
+  content: '';
+  position: absolute;
+  inset: -6px -10px;
+  z-index: -1;
+  background: var(--bg-2);
+}
+
+/* ---- rows: the rungs ---------------------------------------------------- */
+
+.spine__rows {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  list-style: none;
+}
+
+.spine__row {
+  display: grid;
+  grid-template-columns: 1fr 64px 1fr;
+  align-items: center;
+}
+
+.spine__card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s var(--ease);
+}
+
+.spine__row--left .spine__card {
+  grid-column: 1;
+}
+
+.spine__row--right .spine__card {
+  grid-column: 3;
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+/* the rung: a short arm from the rail out to the card */
+.spine__row::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 32px;
+  height: 1px;
+  background: var(--line-hot);
+}
+
+.spine__row--left::after {
+  right: 50%;
+}
+
+.spine__row--right::after {
+  left: 50%;
+}
+
+.spine__num {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line-hot);
+  border-radius: 50%;
+  font-size: 0.7rem;
+  color: var(--fg);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.spine__body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.spine__body b {
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.spine__body i {
   font-style: normal;
   font-size: 0.68rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-/* ---- level 1: blurred, not clickable -------------------------------- */
+button.spine__card:hover,
+button.spine__card:focus-visible {
+  border-color: var(--accent);
+  background: var(--bg-2);
+}
 
-.map__locked {
-  position: absolute;
-  inset: 0;
+.spine__row--left button.spine__card:hover,
+.spine__row--left button.spine__card:focus-visible {
+  transform: translateX(-4px);
+}
+
+.spine__row--right button.spine__card:hover,
+.spine__row--right button.spine__card:focus-visible {
+  transform: translateX(4px);
+}
+
+button.spine__card:hover .spine__num,
+button.spine__card:focus-visible .spine__num {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ---- level 1: blurred, dashed, not clickable ---------------------------- */
+
+.spine__rows.is-locked {
   filter: blur(2px);
   opacity: 0.5;
   pointer-events: none;
   user-select: none;
 }
 
-/* locked = hollow and dashed. no colour, no glow — just obviously not a door */
-.map__node--locked .map__dot {
+.spine__card.is-locked {
   border-style: dashed;
-  border-color: var(--line-hot);
   background: none;
+  cursor: default;
+}
+
+.spine__card.is-locked .spine__num {
+  border-style: dashed;
   color: var(--dim);
 }
 
-.map__soon i {
-  padding: 3px 9px;
-  border: 1px dotted var(--dim);
-  border-radius: 999px;
+.spine__card.is-locked .spine__body b {
   color: var(--dim);
 }
 
-/* ---- the chain between the two levels ------------------------------- */
+/* ---- one side only on a phone: the rail moves to the left edge ---------- */
 
-.map__link {
-  display: grid;
-  place-items: center;
-  height: 44px;
-}
-
-.map__link span {
-  display: block;
-  width: 1px;
-  height: 100%;
-  background: var(--line-hot);
-}
-
-@keyframes map-spin {
-  to {
-    stroke-dashoffset: -100;
+@media (max-width: 700px) {
+  .spine::before {
+    left: 15px;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .map__ring {
-    animation: none;
+  .spine__rows {
+    gap: 10px;
+  }
+
+  .spine__row {
+    grid-template-columns: 48px 1fr;
+  }
+
+  .spine__row--left .spine__card,
+  .spine__row--right .spine__card {
+    grid-column: 2;
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .spine__row::after {
+    left: 16px;
+    right: auto;
+    width: 32px;
+  }
+
+  .spine__row--left button.spine__card:hover,
+  .spine__row--right button.spine__card:hover {
+    transform: none;
   }
 }

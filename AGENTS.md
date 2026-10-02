@@ -59,9 +59,13 @@ npm run typecheck
 | Route | Page | What it is |
 |-------|------|-----------|
 | `/` | `Home` | The roadmap. No hero yet — the landing section is being rewritten |
-| `/:levelId` | `Level` | The topic list for a level, each row showing its 3 resources |
-| `/:levelId/:topicId` | `Topic` | Resource cards + the native slide deck |
+| `/:levelId/:topicId` | `Topic` | The native slide deck, and nothing else |
 | anything else | `NotFound` | "Wrong turn" |
+
+There is **no level list page** — `/level0` alone is a 404. The map node is the entry point: it
+opens `TopicDrawer` (session / sheet / upsolve), and the drawer's **Slides** row is the only
+internal link, to `/:levelId/:topicId`. So the links live on `/` and the deck has an endpoint to
+itself. Do not re-add a `/:levelId` page without being asked.
 
 `levelId` is `level0` / `level1`. **The URL and the data are coupled**: the `id` of a level and
 the `id` of a topic *are* the route and the slide filename. Rename an id and you break the URL
@@ -144,10 +148,10 @@ Rules:
   not have a deck yet**, they get written one at a time.
 - `parseDeck` / `visibleUpTo` live in `src/lib/deckSource.ts` and are deliberately free of react
   and of `import.meta.glob`, so `scripts/check-decks.mjs` can import the very same file. The
-  Vite-only layer (`import.meta.glob`, `loadDeck`, `useDeck`, `deckCounts`) is `src/lib/decks.ts`,
+  Vite-only layer (`import.meta.glob`, `loadDeck`, `useDeck`) is `src/lib/decks.ts`,
   and the renderer is `src/lib/MarkdownSlide.tsx`. The player is `src/components/DeckPlayer.tsx`
-  + `deck.css`, and is `React.lazy`-loaded so the markdown libraries never reach the home or
-  level pages — keep it that way, or `Level.tsx`'s coverage chip will drag react-markdown in.
+  + `deck.css`, and is `React.lazy`-loaded so the markdown libraries never reach the home page —
+  keep it that way, or dragging react-markdown back into `/` costs every first paint.
 - `npm run check:decks` runs first in `npm run build`. It lints every deck that exists (balanced
   fences, non-zero slides, a heading on every slide, no file the roadmap doesn't know about) and
   prints deck coverage. **A topic with no deck is not an error** — that is a normal state — so
@@ -178,26 +182,30 @@ task lists are already covered.
 
 ## 6. The roadmap
 
-`src/components/Roadmap.tsx` + `roadmap.css`. Plain SVG lines and positioned DOM nodes — no
-canvas, no WebGL. The 3D version was deleted on purpose: it cost a 1 MB lazy chunk, needed local
-font files for its labels, and was the weakest surface on a phone.
+`src/components/Roadmap.tsx` + `roadmap.css`. **One shape: a spine.** A single hairline rail down
+the middle of the page (`.spine::before`), one rung per topic alternating left and right, each
+rung a short arm from the rail out to a card. No canvas, no SVG, no WebGL, no positioned
+percentages. The 3D version was deleted on purpose (1 MB lazy chunk, local font files, weakest
+surface on a phone) and so was the ring + serpentine, after three shapes were auditioned at
+`/1` `/2` `/3` — the spine won and the audition routes are gone.
 
-- **Positions are computed, not hand-placed.** `ring(n, cx, cy, r)` puts the nodes on a circle and
-  closes them with a `<polygon>`; `snake(n)` lays the next level out as a serpentine. Both return
-  `{x, y}` in percent of the stage box, which is fed to CSS as `--x` / `--y`. Reuse those helpers
-  instead of adding literals.
-- **One stage per level.** Level 0 is the ring; a gradient connector hangs below it; level 1 is
-  the serpentine.
-- **Lines are SVG, text is DOM.** `.map__lines` is `position: absolute; inset: 0` with
-  `preserveAspectRatio="none"` and `vector-effect: non-scaling-stroke`, so one viewBox in 0-100
-  units draws every connector. Nodes are real `<a>`/`<div>`s on top. This is deliberate: SVG text
-  would scale with the viewBox and be unreadable on a phone.
-- **Open nodes are `<Link>`s. Locked nodes are `<div>`s** with no `href` and no `tabIndex` — they
-  must stay out of the tab order, which is why the blurred layer is also `pointer-events: none`.
-- `.map__stage--*` carries `min-width: 560px` and `.map__scroll` is `overflow-x: auto`, so a phone
-  scrolls the map sideways instead of shrinking the labels below 11px.
-- Add a level by appending it to `levels` and adding one `.map__level` block. The node count,
-  geometry, locked state and "coming soon" chip all follow from the data.
+- **The layout is CSS grid, not computed coordinates.** A row is
+  `grid-template-columns: 1fr 64px 1fr`; `--left` puts the card in column 1, `--right` in column 3
+  with `row-reverse`, and `.spine__row::after` draws the 32px arm on that side. No `ring()`, no
+  `snake()`, no `--x` / `--y`.
+- **The rail is one element for the whole path.** `.spine::before` spans `.spine` top to bottom, so
+  adding a level never breaks the line. `.spine__band::before` masks the rail behind each pill.
+- **Levels are `<section class="spine__level">`** — a centred band (the level `name`, plus the
+  "coming soon" pill when `released` is false; the `kicker` lives in the drawer, not the map) and
+  one `<ol class="spine__rows">`. Node count, alternation and the pill all follow from the data;
+  adding a level needs no new markup.
+- **Open topics are `<button>`s, locked topics are `<div>`s** — no `tabIndex`, and no hover fill, so
+  a locked topic is never a door. Levels are **not** styled differently from each other: a level
+  that is not released says so with the `coming soon` pill under its name, and its rows still read
+  as ordinary cards. Blur/dash the locked rows and the map looks half-broken.
+- **Under 700px it drops the alternation**: the rail moves to the left edge, every rung points
+  right, cards go full width. That is why the map needs no horizontal scroll — do not add one back.
+- Add a level by appending it to `levels` in `src/data/roadmap.ts`. Nothing else.
 
 ## 7. Design language
 
@@ -265,8 +273,9 @@ Known ceilings. Do not "fix" them without being asked, and do not build around t
 - **`react-markdown` runs with raw HTML disabled**, so a malicious deck cannot inject
   markup. If decks ever become user-submitted, that is already handled — but there is still no
   per-user storage, so that would be the backend step.
-- **The map is a second way in, not the only one.** Every node on it also appears in the level
-  page list, which is what a phone or a screen reader actually uses.
+- **The map is the only way in.** Every node is a real `<button>` that opens the drawer, so it is
+  keyboard- and screen-reader-drivable, but there is no plain text list of the path any more — the
+  `/:levelId` page was cut on purpose. Re-add it if the map stops being usable on a phone.
 
 ## 10. Likely next steps, in the order they would hurt least
 

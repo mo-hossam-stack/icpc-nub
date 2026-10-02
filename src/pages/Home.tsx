@@ -12,7 +12,7 @@ export default function Home() {
         <div className="wrap roadmap__head">
           <h2 className="display">The Roadmap</h2>
         </div>
-        <div className="wrap map__scroll">
+        <div className="wrap">
           <Roadmap onOpen={(level, topic) => setPick({ level, topic })} />
         </div>
         </section>
