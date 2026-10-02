@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Nav from './components/Nav'
 import Home from './pages/Home'
-import Level from './pages/Level'
 import Topic from './pages/Topic'
 import NotFound from './pages/NotFound'
 
@@ -20,7 +19,6 @@ export default function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:levelId" element={<Level />} />
         <Route path="/:levelId/:topicId" element={<Topic />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

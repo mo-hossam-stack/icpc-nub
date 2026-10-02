@@ -40,6 +40,32 @@
   font-weight: 800;
 }
 
+/* hairline squares, same neutral as everything else — the glyph carries the meaning */
+.nav__social {
+  display: flex;
+  gap: 8px;
+}
+
+.nav__social a {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.nav__social a:hover {
+  color: var(--fg);
+  border-color: var(--line-hot);
+}
+
+.nav__social svg {
+  width: 16px;
+  height: 16px;
+}
+
 @media (max-width: 620px) {
   .nav {
     padding: 10px 16px;
