@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
-import { levelById, levels } from '../data/roadmap'
+import { levels, levelById } from '../data/roadmap'
+import { deckCounts } from '../lib/decks'
 import NotFound from './NotFound'
 
 const ACCENT_VAR = (c: string) => ({ '--accent': c }) as React.CSSProperties
@@ -64,7 +65,11 @@ export default function Level() {
                   <span key={kind} className={`res res--${kind}${t.links[kind] ? ' is-set' : ''}`}>
                     {kind === 'upsolve' ? 'Upsolve' : kind}
                   </span>
-                ))}              </div>
+                ))}
+                {deckCounts[`${level.id}/${t.id}`] != null && (
+                  <span className="res res--slides is-set">Slides</span>
+                )}
+              </div>
               <div className="topics__go">{locked ? 'Soon' : 'Open →'}</div>
             </>
           )
