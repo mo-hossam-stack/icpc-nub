@@ -91,7 +91,7 @@ export default function Topic() {
           <h2>Slides</h2>
         </div>
         <Suspense fallback={<p className="mono-tag">Loading deck…</p>}>
-          <DeckPlayer levelId={level.id} topicId={topic.id} />
+          <DeckPlayer key={`${level.id}/${topic.id}`} levelId={level.id} topicId={topic.id} />
         </Suspense>
       </section>
     </main>
