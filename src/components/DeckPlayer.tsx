@@ -24,10 +24,9 @@ export default function DeckPlayer({ levelId, topicId }: { levelId: string; topi
   if (!deck.exists) {
     return (
       <div className="deck deck--empty">
-        <p className="mono-tag">No deck yet</p>
+        <p className="mono-tag">Slides</p>
         <p className="deck__hint">
-          Create <code>content/slides/{levelId}/{topicId}.md</code> — one slide per{' '}
-          <code>---</code>.
+          This deck is still being written. It lands after the next session.
         </p>
       </div>
     )
