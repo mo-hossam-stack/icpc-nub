@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import DeckPlayer from '../components/DeckPlayer'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -10,6 +10,12 @@ export default function Topic() {
   const { levelId = '', topicId = '' } = useParams()
   const level = levels.find((l) => l.id === levelId)
   const topic = topicById(levelId, topicId)
+  const [isReady, setIsReady] = useState(false)
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setIsReady(true))
+    return () => cancelAnimationFrame(id)
+  }, [])
 
   if (!level || !topic) return <NotFound />
 
@@ -21,11 +27,15 @@ export default function Topic() {
         <b>{topic.title}</b>
       </nav>
 
-      <ErrorBoundary>
-        <Suspense fallback={<LazyFallback />}>
-          <DeckPlayer key={`${level.id}/${topic.id}`} levelId={level.id} topicId={topic.id} />
-        </Suspense>
-      </ErrorBoundary>
+      {!isReady ? (
+        <LazyFallback />
+      ) : (
+        <ErrorBoundary>
+          <Suspense fallback={<LazyFallback />}>
+            <DeckPlayer key={`${level.id}/${topic.id}`} levelId={level.id} topicId={topic.id} />
+          </Suspense>
+        </ErrorBoundary>
+      )}
     </main>
   )
 }
