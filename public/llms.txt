@@ -5,7 +5,7 @@ upsolve sessions and native slide decks, one topic at a time.
 
 ## Levels
 
-- [Level 0 — The Foundation](/level0): conditions-and-loops, arrays, strings, adhoc, stl1, stl2
+- [Level 0 — The Foundation](/level0): conditions-and-loops, arrays, strings, functions-and-complexity, stl1, stl2
 - [Level 1 — The Construction](/level1): locked, coming soon
 
 ## Topics
@@ -16,7 +16,7 @@ native slide deck rendered from markdown in the repository.
 - [Conditions & Loops](/level0/conditions-and-loops)
 - [Arrays](/level0/arrays)
 - [Strings](/level0/strings)
-- [Ad-Hoc](/level0/adhoc)
+- [Functions & Complexity](/level0/functions-and-complexity)
 - [STL 1](/level0/stl1)
 - [STL 2](/level0/stl2)
 

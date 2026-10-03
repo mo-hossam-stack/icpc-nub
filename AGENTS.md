@@ -24,7 +24,7 @@ The goal is that a member never has to leave the site to learn a topic.
 | 01 | Conditions & Loops | `conditions-and-loops` |
 | 02 | Arrays | `arrays` |
 | 03 | Strings | `strings` |
-| 04 | Ad-Hoc | `adhoc` |
+| 04 | Functions & Complexity | `functions-and-complexity` |
 | 05 | STL 1 | `stl1` |
 | 06 | STL 2 | `stl2` |
 

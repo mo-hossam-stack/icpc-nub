@@ -34,7 +34,7 @@ export const levels: Level[] = [
     name: 'Level 0',
     kicker: 'The Foundation',
     summary:
-      'Everything you need before a single contest problem makes sense. C++ syntax, loops, arrays, strings, ad-hoc logic and the standard library.',
+      'Everything you need before a single contest problem makes sense. C++ syntax, loops, arrays, strings, functions, complexity and the standard library.',
     accent: '#4f7a1e',
     released: true,
     topics: [
@@ -66,11 +66,11 @@ export const levels: Level[] = [
         links: {},
       },
       {
-        id: 'adhoc',
+        id: 'functions-and-complexity',
         index: 3,
-        title: 'Ad-Hoc',
-        blurb: 'Simple constructive problems: simulation, formulas, greedy tricks, edge cases.',
-        tags: ['warmup', 'simulation', 'implementation'],
+        title: 'Functions & Complexity',
+        blurb: 'Functions, recursion, references, and reading the complexity of a solution out loud.',
+        tags: ['cpp basics', 'functions', 'recursion', 'complexity'],
         status: 'open',
         links: {},
       },
