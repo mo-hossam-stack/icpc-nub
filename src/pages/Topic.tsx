@@ -1,9 +1,10 @@
-import { lazy, Suspense } from 'react'
+import { Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import DeckPlayer from '../components/DeckPlayer'
+import ErrorBoundary from '../components/ErrorBoundary'
+import LazyFallback from '../components/LazyFallback'
 import { levels, topicById } from '../data/roadmap'
 import NotFound from './NotFound'
-
-const DeckPlayer = lazy(() => import('../components/DeckPlayer'))
 
 export default function Topic() {
   const { levelId = '', topicId = '' } = useParams()
@@ -20,9 +21,11 @@ export default function Topic() {
         <b>{topic.title}</b>
       </nav>
 
-      <Suspense fallback={<p className="mono-tag">Loading deck…</p>}>
-        <DeckPlayer key={`${level.id}/${topic.id}`} levelId={level.id} topicId={topic.id} />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<LazyFallback />}>
+          <DeckPlayer key={`${level.id}/${topic.id}`} levelId={level.id} topicId={topic.id} />
+        </Suspense>
+      </ErrorBoundary>
     </main>
   )
 }
