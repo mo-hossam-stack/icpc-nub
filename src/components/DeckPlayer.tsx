@@ -15,8 +15,14 @@ export default function DeckPlayer({ levelId, topicId }: { levelId: string; topi
   const [scaleIdx, setScaleIdx] = useState(2)
   const outlineRef = useRef<HTMLDialogElement>(null)
   const deckRef = useRef<HTMLDivElement>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const toggleFull = () => {
+    if (typeof document === "undefined") return
     if (document.fullscreenElement) document.exitFullscreen()
     else deckRef.current?.requestFullscreen()
   }
@@ -42,6 +48,7 @@ export default function DeckPlayer({ levelId, topicId }: { levelId: string; topi
     })
 
   useEffect(() => {
+    if (!mounted) return
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return
       const t = e.target as HTMLElement | null
@@ -94,22 +101,24 @@ export default function DeckPlayer({ levelId, topicId }: { levelId: string; topi
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [deck, n])
+  }, [mounted, deck, n])
 
   // <dialog> gives the outline its focus trap, Escape key and ::backdrop for free
   useEffect(() => {
+    if (!mounted) return
     const d = outlineRef.current
     if (!d) return
     if (outline && !d.open) d.showModal()
     else if (!outline && d.open) d.close()
-  }, [outline])
+  }, [mounted, outline])
 
   // Escape leaves fullscreen natively, so the button state has to follow the browser
   useEffect(() => {
+    if (!mounted) return
     const on = () => setFull(document.fullscreenElement != null)
     document.addEventListener('fullscreenchange', on)
     return () => document.removeEventListener('fullscreenchange', on)
-  }, [])
+  }, [mounted])
 
   if (!deck.exists) {
     return (
