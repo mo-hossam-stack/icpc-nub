@@ -11,9 +11,7 @@ export default function Topic() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Small delay to let browser finish hydration/layout on mobile
-    const t = setTimeout(() => setMounted(true), 0)
-    return () => clearTimeout(t)
+    setMounted(true)
   }, [])
 
   if (!level || !topic) return <NotFound />
@@ -26,9 +24,9 @@ export default function Topic() {
         <b>{topic.title}</b>
       </nav>
 
-      {mounted ? (
+      {mounted && (
         <DeckPlayer key={`${level.id}/${topic.id}`} levelId={level.id} topicId={topic.id} />
-      ) : null}
+      )}
     </main>
   )
 }
