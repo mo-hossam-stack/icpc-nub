@@ -3,15 +3,23 @@ import { parseOne, type Deck } from './deckSource'
 
 export * from './deckSource'
 
-// `_`-prefixed files are authoring aids, not decks, and must not ship to clients
-const RAW = import.meta.glob(['/content/slides/**/*.md', '!/content/slides/**/_*.md'], {
+// Load raw markdown synchronously from Vite's eager glob.
+// This avoids async loading races on first mobile navigation.
+const RAW = import.meta.glob('/content/slides/**/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
 }) as Record<string, string>
 
+// Filter out underscore-prefixed authoring files (if any)
+const DECKS: Record<string, string> = {}
+for (const [k, v] of Object.entries(RAW)) {
+  if (!k.includes('/_')) DECKS[k] = v
+}
+
 export function loadDeck(levelId: string, topicId: string): Deck {
-  return parseOne(RAW[`/content/slides/${levelId}/${topicId}.md`])
+  const key = `/content/slides/${levelId}/${topicId}.md`
+  return parseOne(DECKS[key])
 }
 
 export function useDeck(levelId: string, topicId: string): Deck {
