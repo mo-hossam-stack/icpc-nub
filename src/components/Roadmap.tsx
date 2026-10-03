@@ -1,6 +1,5 @@
 import { levels } from '../data/roadmap'
 import type { Level, Topic } from '../data/roadmap'
-import { preloadDeck } from '../lib/preload'
 import './roadmap.css'
 
 /**
@@ -40,13 +39,7 @@ export default function Roadmap({ onOpen }: { onOpen: (level: Level, topic: Topi
 
               return (
                 <li key={topic.id} className={`spine__row spine__row--${i % 2 ? 'right' : 'left'}`}>
-                  <button
-                    className="spine__card"
-                    onClick={() => onOpen(level, topic)}
-                    onMouseEnter={() => preloadDeck(level.id, topic.id)}
-                    onFocus={() => preloadDeck(level.id, topic.id)}
-                    onTouchStart={() => preloadDeck(level.id, topic.id)}
-                  >
+                  <button className="spine__card" onClick={() => onOpen(level, topic)}>
                     {card}
                   </button>
                 </li>
