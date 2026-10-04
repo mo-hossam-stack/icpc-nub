@@ -1,7 +1,10 @@
+import { Suspense } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import DeckPlayer from '../components/DeckPlayer'
+import ErrorBoundary from '../components/ErrorBoundary'
+import LazyFallback from '../components/LazyFallback'
 import { levels, topicById } from '../data/roadmap'
 import NotFound from './NotFound'
-import { Link, useParams } from 'react-router-dom'
 
 export default function Topic() {
   const { levelId = '', topicId = '' } = useParams()
@@ -17,7 +20,12 @@ export default function Topic() {
         <i>/</i>
         <b>{topic.title}</b>
       </nav>
-      <DeckPlayer key={`${level.id}/${topic.id}`} levelId={level.id} topicId={topic.id} />
+
+      <ErrorBoundary>
+        <Suspense fallback={<LazyFallback />}>
+          <DeckPlayer key={`${level.id}/${topic.id}`} levelId={level.id} topicId={topic.id} />
+        </Suspense>
+      </ErrorBoundary>
     </main>
   )
 }
