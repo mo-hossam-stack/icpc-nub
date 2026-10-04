@@ -2,7 +2,6 @@ import { Component, type ReactNode } from 'react'
 
 interface Props {
   children: ReactNode
-  fallback?: ReactNode
 }
 
 interface State {
@@ -13,13 +12,13 @@ interface State {
 export default class RouteErrorBoundary extends Component<Props, State> {
   state: State = { hasError: false, retried: false }
 
-  static getDerivedStateFromError(error: Error): State {
+  static getDerivedStateFromError(): State {
     return { hasError: true, retried: false }
   }
 
-  componentDidCatch(error: Error, errorInfo: any) {
+  componentDidCatch(_error: Error, errorInfo: any) {
     if (import.meta.env.DEV) {
-      console.error('RouteErrorBoundary caught:', error, errorInfo)
+      console.error('RouteErrorBoundary caught:', _error, errorInfo)
     }
     if (!this.state.retried && typeof window !== 'undefined') {
       this.setState({ retried: true })
