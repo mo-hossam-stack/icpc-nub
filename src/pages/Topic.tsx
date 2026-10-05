@@ -1,10 +1,15 @@
 import { Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import DeckPlayer from '../components/DeckPlayer'
 import ErrorBoundary from '../components/ErrorBoundary'
 import LazyFallback from '../components/LazyFallback'
 import { levels, topicById } from '../data/roadmap'
+import { lazyWithRetry } from '../lib/lazyWithRetry'
 import NotFound from './NotFound'
+import '../components/deck.css'
+
+// react-markdown is ~60% of the bundle and only a deep link needs it. Keeping it
+// out of the entry chunk is what makes a cold /level0/topic paint immediately.
+const DeckPlayer = lazyWithRetry(() => import('../components/DeckPlayer'))
 
 export default function Topic() {
   const { levelId = '', topicId = '' } = useParams()
