@@ -21,12 +21,13 @@ The goal is that a member never has to leave the site to learn a topic.
 
 | # | Topic | id |
 |---|-------|----|
-| 01 | Conditions & Loops | `conditions-and-loops` |
-| 02 | Arrays | `arrays` |
-| 03 | Strings | `strings` |
-| 04 | Functions & Complexity | `functions-and-complexity` |
-| 05 | STL 1 | `stl1` |
-| 06 | STL 2 | `stl2` |
+| 01 | Data Types & Conditions | `data-types-and-conditions` |
+| 02 | Loops | `loops` |
+| 03 | Arrays | `arrays` |
+| 04 | Strings | `strings` |
+| 05 | Functions & Complexity | `functions-and-complexity` |
+| 06 | STL 1 | `stl1` |
+| 07 | STL 2 | `stl2` |
 
 **Level 1 — "The Construction"** (locked / coming soon). The algorithms built on top of Level 0.
 The nodes exist and are visible so the path ahead is clear; the decks land topic by topic.
@@ -235,7 +236,7 @@ else). Loaded from Google Fonts in `index.html`. Never substitute Inter/Roboto/s
 white on `--accent` clears it too. Do not dim text with `opacity` on a parent — that silently
 breaks the ratio. Body copy is `font-weight: 400`; 300 was the old dark-canvas setting and
 is too thin to read on white. Check before you ship: Lighthouse, or the computed-contrast
-sweep over `/`, `/level0`, `/level0/conditions-and-loops`, `/level1` and a 404.
+sweep over `/`, `/level0`, `/level0/data-types-and-conditions`, `/level1` and a 404.
 
 Levels carry their own `accent` exposed as the `--accent` CSS variable, so a new level can
 theme itself by adding one field. Both levels currently point at the same accent — that is the
@@ -281,7 +282,7 @@ Known ceilings. Do not "fix" them without being asked, and do not build around t
 
 1. Fill the real session / sheet / upsolve URLs in `src/data/roadmap.ts`.
 2. Write the remaining Level 0 decks in `content/slides/level0/` — one topic at a time,
-   starting from the `conditions-and-loops.md` example already there.
+   starting from the `data-types-and-conditions.md` example already there.
 3. Rewrite the Level 1 topic list to whatever the community actually teaches next.
 4. Progress tracking in `localStorage`; move to Django only when cross-device sync is wanted.
 5. Mobile nav polish — the map scrolls sideways rather than reflowing.

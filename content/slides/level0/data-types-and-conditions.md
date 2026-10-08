@@ -1,6 +1,6 @@
-# Conditions & Loops
+# Data Types & Conditions
 
-> Turning a human idea into precise instructions: the first program, values, decisions, repetition — and how a judge scores it.
+> The first program, values, decisions — and how a judge scores it.
 
 ---
 

@@ -5,7 +5,7 @@ upsolve sessions and native slide decks, one topic at a time.
 
 ## Levels
 
-- [Level 0 — The Foundation](/level0): conditions-and-loops, arrays, strings, functions-and-complexity, stl1, stl2
+- [Level 0 — The Foundation](/level0): data-types-and-conditions, loops, arrays, strings, functions-and-complexity, stl1, stl2
 - [Level 1 — The Construction](/level1): locked, coming soon
 
 ## Topics
@@ -13,7 +13,8 @@ upsolve sessions and native slide decks, one topic at a time.
 Each topic page lists three resources (session video, problem sheet, upsolve session) and a
 native slide deck rendered from markdown in the repository.
 
-- [Conditions & Loops](/level0/conditions-and-loops)
+- [Data Types & Conditions](/level0/data-types-and-conditions)
+- [Loops](/level0/loops)
 - [Arrays](/level0/arrays)
 - [Strings](/level0/strings)
 - [Functions & Complexity](/level0/functions-and-complexity)

@@ -39,17 +39,26 @@ export const levels: Level[] = [
     released: true,
     topics: [
       {
-        id: 'conditions-and-loops',
+        id: 'data-types-and-conditions',
         index: 0,
-        title: 'Conditions & Loops',
-        blurb: 'if / else, switch, for, while, do-while — and when to reach for which one.',
-        tags: ['data types', 'conditions', 'loops'],
+        title: 'Data Types & Conditions',
+        blurb: 'int, long long, char, string — plus if / else, comparisons and logical operators.',
+        tags: ['data types', 'conditions', 'operators'],
+        status: 'open',
+        links: {},
+      },
+      {
+        id: 'loops',
+        index: 1,
+        title: 'Loops',
+        blurb: 'for, while, do-while — and when to reach for which one.',
+        tags: ['for', 'while', 'nested loops'],
         status: 'open',
         links: {},
       },
       {
         id: 'arrays',
-        index: 1,
+        index: 2,
         title: 'Arrays',
         blurb: 'Static storage, indexing, traversal patterns, sorting by hand, 2D grids.',
         tags: ['1d array', 'frequency array', 'multi-d array'],
@@ -58,7 +67,7 @@ export const levels: Level[] = [
       },
       {
         id: 'strings',
-        index: 2,
+        index: 3,
         title: 'Strings',
         blurb: 'std::string, character handling, tokenising, parsing input like a judge does.',
         tags: ['built-in functions', 'find and substr'],
@@ -67,7 +76,7 @@ export const levels: Level[] = [
       },
       {
         id: 'functions-and-complexity',
-        index: 3,
+        index: 4,
         title: 'Functions & Complexity',
         blurb: 'Functions, recursion, references, and reading the complexity of a solution out loud.',
         tags: ['big o', 'time complexity', 'space complexity', 'loop analysis'],
@@ -76,7 +85,7 @@ export const levels: Level[] = [
       },
       {
         id: 'stl1',
-        index: 4,
+        index: 5,
         title: 'STL 1',
         blurb: 'vector, pair, sort, set — the containers you will use in every problem.',
         tags: ['pair and vectors', 'stack', 'queue and deque', 'priority queue'],
@@ -85,7 +94,7 @@ export const levels: Level[] = [
       },
       {
         id: 'stl2',
-        index: 5,
+        index: 6,
         title: 'STL 2',
         blurb: 'map, queue, stack, deque, tuple — dynamic structures and priority logic.',
         tags: ['set', 'map'],
