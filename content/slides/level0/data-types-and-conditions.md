@@ -245,31 +245,8 @@ You will reuse these constantly.
 
 ---
 
-## Expressions produce values
 
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = 7;                    // [!]
-    cout << x + 5 << '\n';   // 12 // [!]
-    cout << x * x << '\n';   // 49 // [!]
-    cout << (x > 10) << '\n'; // 0 
-}
-```
-
----
-
-## Statement or expression
-
-> **What value does this piece of code produce?**
-
-Asking that question is how you stop guessing.
-
----
-
-## Comparisons produce facts
+## Comparisons 0/1
 
 ```cpp
 #include <iostream>
