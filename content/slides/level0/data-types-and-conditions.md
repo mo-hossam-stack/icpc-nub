@@ -277,7 +277,7 @@ the answer is at most 10^18
 Constraints are not decoration: they tell you **which types and which solutions are even possible**.
 
 ---
-    
+
 
 ## Division and modulus
 
@@ -328,19 +328,11 @@ int main() {
 An **expression** is values in → operation → a new value out:
 
 - `x + 5` produces an integer
-- `x > 10` produces a **fact** (`true` / `false`)
+- `x > 10` produces (`true` / `false`)
 
 Point at any piece of code and ask: **what value does this produce?**
 
 ---
-
-## Statement or expression
-
-- `x + 5` — an **expression**: it produces a value.
-- `x = x + 5;` — a **statement**: it *does* something — it stores.
-- `cout << x;` — a statement: it prints.
-
-The point is not the terminology — it is the habit:
 
 > **What value does this piece of code produce?**
 
@@ -362,24 +354,14 @@ int main() {
 }
 ```
 
-The result is **not a number and not text** — it is a fact. Its type is `bool`:
+The result is **not a number and not text** — it is a 0/1. Its type is `bool`:
 
 | Type | Holds | Watch out |
 |------|-------|-----------|
 | `bool` | `true` / `false` | prints as `1` / `0` |
 
-Comparisons: `> >= < <= == !=`. Wrap them in parentheses when you print them.
 
 ---
-
-## = assigns, == compares
-
-Golden rule: `=` assigns, `==` compares.
-
-Two traps:
-
-- `if (x = 5)` — this **assigns** 5, and the condition is always true. Your compiler warns you.
-- Chained comparisons do not work:
 
 ```cpp
 #include <iostream>
@@ -411,6 +393,25 @@ Translate the English condition into small facts, then combine them.
 
 ---
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###### here is the start of the next section, which is about IF in C++ using if statements.
 ## Decisions — if
 
 ```cpp
