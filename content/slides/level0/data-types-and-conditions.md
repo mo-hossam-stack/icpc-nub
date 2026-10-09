@@ -198,10 +198,10 @@ int main() {
 using namespace std;
 
 int main() {
-    int age;          // declaration: reserve storage // [!]
-    age = 20;         // assignment: put a value in // [!]
-    int score = 100;  // both at once // [!]
-    cout << age << ' ' << score;
+                                        int age;          // declaration: reserve storage // [!]
+                                        age = 20;         // assignment: put a value in // [!]
+                        int score = 100;  // both at once // [!]
+                        cout << age << ' ' << score;
 }
 ```
 
