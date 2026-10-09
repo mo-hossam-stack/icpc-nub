@@ -245,9 +245,9 @@ Read two integers `a` and `b` (each up to `10⁹`) and print their product `a * 
 using namespace std;
 
 int main() {
-    cout << 7 / 2   << '\n';   // 3 — truncates // [!]
-    cout << 7 % 2   << '\n';   // 1 — remainder
-    cout << -7 / 2  << '\n';   // -3 — toward zero // [!]
+    cout << 7 / 2   << '\n';   // 3  truncates // [!]
+    cout << 7 % 2   << '\n';   // 1  remainder
+    cout << -7 / 2  << '\n';   // -3  toward zero // [!]
 }
 ```
 
@@ -276,6 +276,18 @@ int main() {
     cout << (x != 5) << '\n';  // 0
 }
 ```
+
+---
+
+## Practice — Digits Summation
+
+Read two numbers `N` and `M` (each up to `10¹⁸`) and print the sum of their **last digits**.
+
+**G. Digits Summation** — [link](https://codeforces.com/group/ooR0BxzUdQ/contest/718168/problem/G)
+
+- Hint: the last digit hides at `N % 10` and `M % 10` — add those two.
+- Example: `13 12` → `3 + 2` → `5`.
+- Watch out: `10¹⁸` does not fit in `int` — choose the type from the table.
 
 ---
 
@@ -328,18 +340,6 @@ using namespace std;
 
 int main() {
     int x; cin >> x;                    // [!]
-    if (x < 100) cout << "small";
-    else if (x < 50) cout << "tiny";    // [!]
-    else cout << "large";
-}
-```
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x; cin >> x;                    // [!]
     if (x < 50) cout << "tiny";
     else if (x < 100) cout << "small";
     else cout << "large";
@@ -358,12 +358,12 @@ The human question: *"is A larger than B?"*
 using namespace std;
 
 int main() {
-    int A, B;                    // [!]
-    cin >> A >> B;
-    if (A > B) {                 // [!]
-        cout << "A is larger";
+    int a, b;                    // [!]
+    cin >> a >> b;
+    if (a > b) {                 // [!]
+        cout << "a is larger";
     } else {                     // [!]
-        cout << "B is larger or equal";
+        cout << "b is larger or equal";
     }
 }
 ```
@@ -371,7 +371,16 @@ int main() {
 ---
 
 
-## The verdicts
+## Practice — Multiples
+
+
+Read `A` and `B` and print `Multiples` if one of them divides the other, otherwise `No Multiples`.
+
+**L. Multiples** — [link](https://codeforces.com/group/ooR0BxzUdQ/contest/718168/problem/L)
+
+---
+
+## The judge
 
 You submit to an online judge. It runs hidden tests and returns a verdict:
 
@@ -382,11 +391,9 @@ You submit to an online judge. It runs hidden tests and returns a verdict:
 | TLE | Time limit — too slow |
 | MLE | Memory limit — too much memory |
 | CE | Compilation error — the code never ran |
-| RE | Runtime error — it ran, then crashed |
-
 ---
 
-## Reading a verdict as evidence
+## Reading a verdict as judge
 
 Don't change code randomly. The verdict is **evidence**:
 
