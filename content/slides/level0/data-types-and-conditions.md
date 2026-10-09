@@ -227,29 +227,14 @@ Read two integers `a` and `b` (each up to `10⁹`) and print their product `a * 
 
 ## Operators
 
-**Arithmetic** — produce a value:
-
-| `+` | `-` | `*` | `/` | `%` |
-|-----|-----|-----|-----|-----|
-| add | subtract | multiply | divide (drops fraction) | remainder |
-
-**Assignment** — put a value into a variable:
-
-| `=` | `+=` | `-=` | `*=` | `/=` | `%=` |
-|-----|------|------|------|------|------|
-| `a = b` | `a = a + b` | `a = a - b` | `a = a * b` | `a = a / b` | `a = a % b` |
-
-**Comparison** — ask a question, get `true`/`false` (`1`/`0`):
-
-| `>` | `>=` | `<` | `<=` | `==` | `!=` |
-|-----|------|-----|------|------|------|
-| greater | greater or equal | less | less or equal | equal | not equal |
-
-**Logical** — combine facts:
-
-| `&&` | `\|\|` | `!` |
-|------|------|-----|
-| and | or | not |
+| Arithmetic | Assignment | Comparison | Logical |
+|:----------:|:----------:|:----------:|:-------:|
+| `+` add | `=` assign | `>` greater | `&&` and |
+| `-` subtract | `+=` `a += b` | `>=` greater or equal | `\|\|` or |
+| `*` multiply | `-=` `a -= b` | `<` less | `!` not |
+| `/` divide | `*=` `a *= b` | `<=` less or equal | |
+| `%` remainder | `/=` `a /= b` | `==` equal | |
+| | `%=` `a %= b` | `!=` not equal | |
 
 ---
 
@@ -293,6 +278,8 @@ int main() {
 ```
 
 ---
+
+## Decisions — if
 
 ```cpp
 #include <iostream>
