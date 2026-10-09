@@ -207,9 +207,6 @@ int main() {
 
 - **Declaration** creates the storage and names it.
 - **Assignment** puts a value into existing storage.
-- `int age = 20;` does both in one line.
-
-`age = age + 5` is not math — it is a recipe: **read** the old value → **compute** → **store** the result back.
 
 ---
 
@@ -228,9 +225,35 @@ Read two integers `a` and `b` (each up to `10⁹`) and print their product `a * 
 
 ---
 
-## Division and modulus
+## Operators
 
-Two questions come up constantly: *is n even?* and *what is the last digit?*
+**Arithmetic** — produce a value:
+
+| `+` | `-` | `*` | `/` | `%` |
+|-----|-----|-----|-----|-----|
+| add | subtract | multiply | divide (drops fraction) | remainder |
+
+**Assignment** — put a value into a variable:
+
+| `=` | `+=` | `-=` | `*=` | `/=` | `%=` |
+|-----|------|------|------|------|------|
+| `a = b` | `a = a + b` | `a = a - b` | `a = a * b` | `a = a / b` | `a = a % b` |
+
+**Comparison** — ask a question, get `true`/`false` (`1`/`0`):
+
+| `>` | `>=` | `<` | `<=` | `==` | `!=` |
+|-----|------|-----|------|------|------|
+| greater | greater or equal | less | less or equal | equal | not equal |
+
+**Logical** — combine facts:
+
+| `&&` | `\|\|` | `!` |
+|------|------|-----|
+| and | or | not |
+
+---
+
+## Division and modulus
 
 ```cpp
 #include <iostream>
@@ -240,13 +263,8 @@ int main() {
     cout << 7 / 2   << '\n';   // 3 — truncates // [!]
     cout << 7 % 2   << '\n';   // 1 — remainder
     cout << -7 / 2  << '\n';   // -3 — toward zero // [!]
-    cout << -7 % 2  << '\n';   // -1 — not 1!
 }
 ```
-
-- `/` between integers drops the fraction: `7 / 2` is `3`, not `3.5`.
-- `%` gives the remainder: `a = q·k + r`.
-- Negative numbers truncate **toward zero** — do not assume `-7 % 2` is `1`.
 
 ---
 
@@ -259,7 +277,6 @@ int main() {
 You will reuse these constantly.
 
 ---
-
 
 ## Comparisons 0/1
 
@@ -275,50 +292,7 @@ int main() {
 }
 ```
 
-The result is **not a number and not text** — it is a 0/1. Its type is `bool`:
-
-| Type | Holds | Watch out |
-|------|-------|-----------|
-| `bool` | `true` / `false` | prints as `1` / `0` |
-
-
 ---
-
-## Combining facts — && || !
-
-| Operator | Reads as | Example |
-|----------|----------|---------|
-| `&&` | and | `x > 0 && x < 10` |
-| `\|\|` | or | `x == 0 \|\| x == 1` |
-| `!` | not | `!(x == 5)` is the same as `x != 5` |
-
-Translate the English condition into small facts, then combine them.
-
-- **Short-circuit:** in `b != 0 && a / b > 1`, if `b == 0` the second half **never runs**.
-- `&&` binds tighter than `||` — when in doubt, **parenthesize**.
-
----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###### here is the start of the next section, which is about IF in C++ using if statements.
-## Decisions — if
 
 ```cpp
 #include <iostream>
