@@ -192,11 +192,6 @@ int main() {
 }
 ```
 
-Output is **exact**:
-
-- `YES` ≠ `Yes` ≠ `yes`
-- spaces and capital letters matter — the judge compares character by character
-
 ---
 
 ## A × B, complete
@@ -206,63 +201,24 @@ Output is **exact**:
 using namespace std;
 
 int main() {
-    int A, B;                // [!]
-    cin >> A >> B;           // [!]
-    int answer = A * B;
-    cout << answer;          // [!]
+    int a, b;                // [!]
+    cin >> a >> b;           // [!]
+    int ans = a * b;
+    cout << ans;             // [!]
 }
 ```
 
 Trace the input `3 5` before running anything:
 
-1. `int A, B;` — storage reserved for two integers
-2. `cin >> A >> B;` — A gets `3`, B gets `5`
-3. `int answer = A * B;` — answer gets `15`
-4. `cout << answer;` — prints `15`
+1. `int a, b;` — storage reserved for two integers
+2. `cin >> a >> b;` — a gets `3`, b gets `5`
+3. `int ans = a * b;` — ans gets `15`
+4. `cout << ans;` — prints `15`
 
----
+-------
 
-## Push A × B until it breaks
 
-```cpp
-#include <iostream>
-using namespace std;
 
-int main() {
-    int a, b;                // [!]
-    cin >> a >> b;           // [!]
-    cout << a * b;           // [!]
-}
-```
-
-Predict first, then check:
-
-- Input `12 5` → `60`. Fine.
-- Input `100000 100000` → `10000000000`. Does `int` have a pattern for that?
-- Input `1000000000 1000000000` → `10¹⁸`. Certainly not.
-
-**Why can't the computer just store any number it is given?**
-
----
-
-## Variables are storage
-
-```cpp
-int age = 20;
-```
-
-means roughly:
-
-> Give me a piece of storage large enough for an `int`, call it `age`, and put `20` there.
-
-```
-name      address      value
-age       0x1000       20
-```
-
-A variable is a **name for a place where a value lives**.
-
----
 
 ## Declaration and assignment
 
@@ -290,107 +246,13 @@ int main() {
 
 | Type | Bytes | Holds | Use it for |
 |------|-------|-------|-----------|
-| `short` | 2 | −32,768 … 32,767 | rarely — the extra range is not worth it |
-| `int` | 4 | about ±2.1×10⁹ | the default integer |
-| `long long` | 8 | about ±9.2×10¹⁸ | big values and big products |
-| `unsigned int` | 4 | 0 … about 4.3×10⁹ | no negatives — easy to get wrong |
-| `float` | 4 | ~7 digits, not exact | avoid |
-| `double` | 8 | ~15 digits, not exact | decimals when the problem needs them |
-| `char` | 1 | one character (a number) | characters |
-| `bool` | 1 | `true` / `false` | facts |
+| `int` | 4(32 bits) | about ±2.1×10⁹ | the default integer |
+| `long long` | 8(64 bits) | about ±9.2×10¹⁸ | big values and big products |
+| `float` | 4(32 bits) | ~7 digits, not exact | avoid |
+| `double` | 8(64 bits) | ~15 digits, not exact | decimals when the problem needs them |
+| `char` | 1(8 bits) | one character (a number) | characters |
 | `string` | — | text | words |
-
-Sizes are typical on a judge. `long` is platform-dependent, so in competitive programming we write `long long`.
-
----
-
-## A byte is 8 bits
-
-Storage is counted in **bytes**, and one byte is **8 bits**:
-
-```
-1 byte    = 8 bits
-int       = 4 bytes = 32 bits = 2³² patterns
-long long = 8 bytes = 64 bits = 2⁶⁴ patterns
-```
-
-A fixed number of bytes gives a **fixed range** — that is the "problem" behind our A × B break.
-
-```
-00000000 00000000 00000000 00000101   →   5
-```
-
----
-
-## Why ~2 billion
-
-Half the patterns are negative, half are non-negative (the exact convention is a lesson of its own — *numbers in memory*).
-
-```
-2³² / 2 = 2³¹ = 2,147,483,648 patterns per side
-```
-
-So `int` spans **-2,147,483,648 … 2,147,483,647** — about ±2.1 × 10⁹.
-
-`long long` gets **64 bits** → about ±9.2 × 10¹⁸.
-
-`2147483647` is not trivia you memorize — you **derived** it.
-
----
-
-## Integer overflow
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a = 100000;      // [!]
-    int b = 100000;
-    int c = a * b;       // 10000000000 needs 34 bits // [!]
-    cout << c;           // 1410065408 — not an error
-}
-```
-
-`10⁵ × 10⁵ = 10¹⁰`, but `int` only has patterns for ±2×10⁹.
-
-The result **wraps around** — no crash, no warning, just a wrong number. This is **the #1 beginner bug**, and it ends as a silent WA.
-
----
-
-## Fix it with long long
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    long long a = 100000;    // [!]
-    long long b = 100000;
-    long long c = a * b;     // 10000000000
-    cout << c;               // correct
-}
-```
-
-Rule: if a value **or any intermediate result** can exceed ±2×10⁹, use `long long`.
-
-But watch this:
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a = 100000;              // [!]
-    int b = 100000;
-    long long c = a * b;         // did long long save us? // [!]
-    cout << c;                   // NO — still wrong
-}
-```
-
-`a * b` is evaluated **before** the assignment to `c`, as `int × int`.
-
-The habit: **ask what type this expression is evaluated as.** Decide the types before you type — from the constraints.
+| `bool` | 1(8 bits) | `true` / `false` | conditions and yes/no values |
 
 ---
 
@@ -415,48 +277,7 @@ the answer is at most 10^18
 Constraints are not decoration: they tell you **which types and which solutions are even possible**.
 
 ---
-
-## char is a number
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    char c = 'A';        // [!]
-    cout << c << '\n';   // A
-    c = c + 1;           // [!]
-    cout << c << '\n';   // B
-}
-```
-
-Computers have no magical `A` object — a character **is a number**:
-
-- `'A'` = 65, `'B'` = 66, `'a'` = 97 (the ASCII table)
-- `c + 1` is arithmetic on numbers → `66` → printed back as `'B'`
-- `char('0' + 3)` gives `'3'` — how digits become text
-- `'a'` (a character) is not `"a"` (text of length 1)
-
----
-
-## Doubles are not exact
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    cout << (0.1 + 0.2 == 0.3) << '\n';   // predict: 1 // [!]
-}
-```
-
-It prints **`0`**. The math says true; the machine says false.
-
-Not every mathematical number can be represented exactly by every storage format (binary fractions — a later lesson).
-
-Level-0 rule: **prefer integers** (`long long`) whenever the problem allows it.
-
----
+    
 
 ## Division and modulus
 
