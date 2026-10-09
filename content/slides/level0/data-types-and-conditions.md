@@ -143,6 +143,20 @@ int main() {
 
 ---
 
+## The data types
+
+| Type | Bytes | Holds | Use it for |
+|------|-------|-------|-----------|
+| `int` | 4(32 bits) | about ±2.1×10⁹ | the default integer |
+| `long long` | 8(64 bits) | about ±9.2×10¹⁸ | big values and big products |
+| `float` | 4(32 bits) | ~7 digits, not exact | avoid |
+| `double` | 8(64 bits) | ~15 digits, not exact | decimals when the problem needs them |
+| `char` | 1(8 bits) | one character (a number) | characters |
+| `string` | — | text | words |
+| `bool` | 1(8 bits) | `true` / `false` | conditions and yes/no values |
+
+---
+
 ## Reading input — cin
 
 ```cpp
@@ -175,7 +189,7 @@ int main() {
 
 ---
 
-
+---
 
 ## Declaration and assignment
 
@@ -198,43 +212,6 @@ int main() {
 `age = age + 5` is not math — it is a recipe: **read** the old value → **compute** → **store** the result back.
 
 ---
-
-## The data types
-
-| Type | Bytes | Holds | Use it for |
-|------|-------|-------|-----------|
-| `int` | 4(32 bits) | about ±2.1×10⁹ | the default integer |
-| `long long` | 8(64 bits) | about ±9.2×10¹⁸ | big values and big products |
-| `float` | 4(32 bits) | ~7 digits, not exact | avoid |
-| `double` | 8(64 bits) | ~15 digits, not exact | decimals when the problem needs them |
-| `char` | 1(8 bits) | one character (a number) | characters |
-| `string` | — | text | words |
-| `bool` | 1(8 bits) | `true` / `false` | conditions and yes/no values |
-
----
-
-## Constraints choose your types
-
-A real problem statement hands you this:
-
-```text
-1 ≤ T ≤ 100
-1 ≤ n ≤ 10^5
-1 ≤ a[i] ≤ 10^9
-the answer is at most 10^18
-```
-
-| Constraint | What it tells you |
-|------------|-------------------|
-| values ≤ 2×10⁹ | `int` is enough |
-| values ≤ 9×10¹⁸ | `long long` — including intermediate products |
-| n ≤ 100 | almost any approach works |
-| n ≤ 10⁵ | some approaches are too slow — a later lesson |
-
-Constraints are not decoration: they tell you **which types and which solutions are even possible**.
-
----
-
 
 ## Division and modulus
 
@@ -278,18 +255,13 @@ int main() {
     int x = 7;                    // [!]
     cout << x + 5 << '\n';   // 12 // [!]
     cout << x * x << '\n';   // 49 // [!]
-    cout << (x > 10) << '\n'; // 0 — a fact
+    cout << (x > 10) << '\n'; // 0 
 }
 ```
 
-An **expression** is values in → operation → a new value out:
-
-- `x + 5` produces an integer
-- `x > 10` produces (`true` / `false`)
-
-Point at any piece of code and ask: **what value does this produce?**
-
 ---
+
+## Statement or expression
 
 > **What value does this piece of code produce?**
 
@@ -317,21 +289,6 @@ The result is **not a number and not text** — it is a 0/1. Its type is `bool`:
 |------|-------|-----------|
 | `bool` | `true` / `false` | prints as `1` / `0` |
 
-
----
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = -100;                        // [!]
-    cout << (0 < x && x < 10) << '\n';   // 0 — correct // [!]
-    cout << (0 < x < 10)     << '\n';   // 1 — WRONG, and it compiled // [!]
-}
-```
-
-C++ reads left to right: `(0 < x)` becomes `0`, then `0 < 10` is `true`. Never chain — use `&&`.
 
 ---
 
