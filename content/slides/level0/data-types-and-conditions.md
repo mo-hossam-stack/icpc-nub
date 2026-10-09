@@ -1,9 +1,3 @@
-# Data Types & Conditions
-
-> One human problem, taken apart until you can see every step between your thought and the judge's verdict.
-
----
-
 ## The problem: two numbers
 
 Read two numbers and print their product:
@@ -15,23 +9,21 @@ Inside your head it happens in steps:
 3. Your brain runs a **mechanism** you learned as a child: multiplication
 4. Your brain **says** the result: `15`
 
-A computer has no brain to fill the gaps. Every one of those steps must be spelled out.
-
 ---
 
 ## From human idea to algorithm
 
-A machine needs the recipe written down:
+A machine needs the what to be written down:
 
 - **Problem** — what you were asked
-- **Algorithm** — a precise, step-by-step recipe that solves it, in any language
-- **Code** — that recipe written in any programming language
+- **Algorithm** — a precise, step-by-step instruction that solves it, in any language
+- **Code** — logic, written into life.
 
 ---
 
 ## Computers only understand 0 and 1
 
-A circuit has two states: OFF → `0`, ON → `1`. One such digit is a **bit**.
+A circuit has two states: OFF → `0`, ON → `1`. Each state represents one binary digit, called a **bit**.
 
 Everything inside the machine is made of bits — numbers, text, and **instructions** too:
 
@@ -51,9 +43,7 @@ Writing instructions by hand would look like this:
 01110010 01100101 01100001 01100100  ...
 ```
 
-Slow, unreadable, and one wrong bit breaks everything.
-
-So we invented **languages** that look like English — `cout<<"Hello, World!";` instead of a row of bits.
+So we invented **programming languages** that look like English  `if (score >= 50) cout << "You passed!"; ` instead of a row of bits.
 
 ---
 
@@ -66,7 +56,6 @@ cout << "Hello, World!";   →   01100001 01100010 01100011 ...
 ```
 
 - One line becomes **many** machine instructions.
-- That translation is the only reason we never type bits ourselves.
 - Every language has a compiler (or an interpreter) behind it.
 
 ---
@@ -75,13 +64,11 @@ cout << "Hello, World!";   →   01100001 01100010 01100011 ...
 
 The **CPU** is the brain of the computer.
 
-- It **fetches** one instruction, **executes** it, then goes to the next.
-- It works on the bits in memory.
-- Fast or slow, correct or wrong, it does exactly what the bits say.
+- It fetches, decodes, and executes instructions.
 
 ---
 
-## The IDE is where we type
+## The "IDE" is where we type
 
 The **IDE** is the editor you write code in:
 
@@ -95,11 +82,10 @@ examples:
 
 ## What happens when you press Run
 
-1. You write **source code** (C++)
+1. You write **source code**
 2. The **compiler** translates it into machine code (0s and 1s)
 3. The **CPU** executes it → your program's output
 
-No magic black box. Every step has a name.
 
 ---
 
@@ -112,17 +98,16 @@ No magic black box. Every step has a name.
 | CPU | Executes the machine code |
 | IDE (VS Code, CLion, CodeBlocks) | The editor that runs the compiler for you |
 
-The Run button just chains these for you — now you know what it does.
 
 ---
 
-## Why C++ for competitive programming
+## Why C++?
 
-| Language | Speed | Typing effort | In competitive programming |
-|----------|-------|---------------|---------------------------|
-| C++ | fastest | more | the standard; allowed everywhere; |
-| Python | slow | least | fine for tiny limits, times out on big ones |
-| Java | fast | most | allowed, but slower to write |
+- Python — Easy to write, but can be slow.
+- C — No built-in STL.
+- C# — Less common in competitive programming.
+- Java — Powerful, but more verbose.
+- **C++ — Fast, powerful, and built for problem solving.**
 
 
 ---
@@ -130,12 +115,12 @@ The Run button just chains these for you — now you know what it does.
 ## Your first program
 
 ```cpp
-#include <iostream>
+#include <iostream>             // [!]
 using namespace std;            // [!]
 
-int main() {                    // [!]
-    cout << "Hello, ICPC NUB";  // [!]
-}
+            int main() {                    
+            cout << "Hello, ICPC NUB";  
+   }
 ```
 
 - `#include <iostream>` — brings in input/output tools.
@@ -147,7 +132,6 @@ int main() {                    // [!]
 
 ## using namespace std;
 
-Every standard name lives in a namespace called `std`:
 
 ```cpp
 #include <iostream>
@@ -156,9 +140,6 @@ int main() {
     std::cout << 5 + 3;
 }
 ```
-
-- `std::` is the full name. `using namespace std;` lets us drop it.
-- **The problem:** it pulls *every* std name into scope.
 
 ---
 
@@ -193,30 +174,6 @@ int main() {
 ```
 
 ---
-
-## A × B, complete
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a, b;                // [!]
-    cin >> a >> b;           // [!]
-    int ans = a * b;
-    cout << ans;             // [!]
-}
-```
-
-Trace the input `3 5` before running anything:
-
-1. `int a, b;` — storage reserved for two integers
-2. `cin >> a >> b;` — a gets `3`, b gets `5`
-3. `int ans = a * b;` — ans gets `15`
-4. `cout << ans;` — prints `15`
-
--------
-
 
 
 
