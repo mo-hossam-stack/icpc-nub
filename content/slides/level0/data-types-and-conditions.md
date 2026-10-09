@@ -225,8 +225,6 @@ Read two integers `a` and `b` (each up to `10⁹`) and print their product `a * 
 
 **C. I Hate Maths** — [link](https://codeforces.com/group/ooR0BxzUdQ/contest/718168/problem/C)
 
-Read two integers `a` and `b` (each up to `10⁹`) and print their product `a * b`.
-
 
 ---
 
