@@ -213,6 +213,23 @@ int main() {
 
 ---
 
+## Practice
+
+Solve these two on the Codeforces. Read each statement yourself, then use what you learned.
+
+Read a name `S` and print `Hello, ` followed by the name.
+
+**B. Say Hello** — [link](https://codeforces.com/group/ooR0BxzUdQ/contest/718168/problem/B)
+
+Read two integers `a` and `b` (each up to `10⁹`) and print their product `a * b`.
+
+**C. I Hate Maths** — [link](https://codeforces.com/group/ooR0BxzUdQ/contest/718168/problem/C)
+
+Read two integers `a` and `b` (each up to `10⁹`) and print their product `a * b`.
+
+
+---
+
 ## Division and modulus
 
 Two questions come up constantly: *is n even?* and *what is the last digit?*
@@ -358,10 +375,6 @@ int main() {
 }
 ```
 
-What does `x = 10` print? **`small`** — so the `tiny` branch can never run. The first true branch wins; the rest are skipped.
-
-The fix: check the **most specific** range first.
-
 ```cpp
 #include <iostream>
 using namespace std;
@@ -376,25 +389,6 @@ int main() {
 
 ---
 
-## Always use braces
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x; cin >> x;
-    if (x > 0)               // [!]
-        cout << "big\n";
-    cout << "done\n";        // runs no matter what // [!]
-}
-```
-
-Without `{ }`, only the **next single line** is guarded — `cout << "done"` runs regardless of `x`.
-
-Habit: **braces always**, even for one line. It also prevents the classic dangling-else bug.
-
----
 
 ## Back to A and B
 
@@ -415,46 +409,8 @@ int main() {
 }
 ```
 
-The whole session in one program: a **human question** → an **expression** → a **fact** → **execution controlled by that fact**.
-
 ---
 
-## Tracing
-
-**Tracing** = running your code in your head, step by step.
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = 5;     // [!]
-    x = x + 2;     // [!]
-    x = x * 3;     // [!]
-    cout << x;     // [!]
-}
-```
-
-Trace: `5 → 7 → 21`. Output: `21`.
-
-- Do it **before** you run anything.
-- After a WA, trace until you find the exact line where your mental model and the program disagree.
-
----
-
-## Edge cases
-
-Test the **borders of the constraints** — that is where bugs live:
-
-- the smallest input (`0`, `1`)
-- negatives
-- the largest allowed values (near `2·10⁹`, near the constraint max)
-- all values equal
-- output that must match **exactly** (`YES` vs `yes`)
-
-Ask: *what does my program do at the edge?*
-
----
 
 ## The verdicts
 
