@@ -401,7 +401,7 @@ You submit to an online judge. It runs hidden tests and returns a verdict:
 | CE | Compilation error — the code never ran |
 ---
 
-## Reading a verdict as judge
+## Reading a Codeforces Verdict as a Judge
 
 Don't change code randomly. The verdict is **evidence**:
 
