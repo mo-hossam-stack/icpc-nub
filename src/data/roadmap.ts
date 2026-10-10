@@ -45,7 +45,11 @@ export const levels: Level[] = [
         blurb: 'int, long long, char, string — plus if / else, comparisons and logical operators.',
         tags: ['data types', 'conditions', 'operators'],
         status: 'open',
-        links: {},
+        links: {
+          session:
+            'https://nubedu-my.sharepoint.com/:v:/g/personal/m_hossam1050_nub_edu_eg/IQAGuUED_ZAGR73oC6bVszoTAU4sp-vRMRvBkGm4Ah96BnI?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=QvLxek',
+          sheet: 'https://codeforces.com/group/ooR0BxzUdQ/contest/718168',
+        },
       },
       {
         id: 'loops',

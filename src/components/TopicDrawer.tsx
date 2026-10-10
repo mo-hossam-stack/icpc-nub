@@ -57,12 +57,27 @@ export default function TopicDrawer({
             {RES.map(({ kind, label, note }) => {
               const href = topic.links[kind]
               const live = href && href !== '#'
-              return (
-                <div key={kind} className={`drawer__row${live ? '' : ' is-empty'}`}>
+              const row = (
+                <>
                   <span className={`res-grid__dot res-grid__dot--${kind}`} />
                   <b>{label}</b>
                   <i>{live ? note : 'Link coming soon'}</i>
                   <s>{live ? '↗' : '—'}</s>
+                </>
+              )
+              return live ? (
+                <a
+                  key={kind}
+                  className="drawer__row"
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {row}
+                </a>
+              ) : (
+                <div key={kind} className="drawer__row is-empty">
+                  {row}
                 </div>
               )
             })}
