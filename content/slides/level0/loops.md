@@ -106,23 +106,6 @@ for (int i = 1; i <= n; i++)   // exactly n passes — when you want 1..n
 ---
 
 
-## The sum from 1 to n loop
-
-
-```cpp
-#include <iostream>
-using namespace std;
-int main() {
-    long long sum = 0;
-    for (int i = 1; i <= n; i++) {  // [!]
-        sum += i;                  // [!]
-    }
-    cout << sum;
-}
-```
-
-
----
 
 ## Predict the pass count
 
@@ -150,9 +133,22 @@ The condition is checked **before** the body  so a loop can run zero times. That
 
 ---
 
+## Practice
+
+Solve these on Codeforces. Read each statement yourself, then use the loop you just learned.
+
+Read `N` and print the sum of every number from `1` to `N`.
+
+**B. Summation from 1 to N** — [link](https://codeforces.com/group/ooR0BxzUdQ/contest/722898/problem/B)
+
+Read `N` and print `N!` — the product `1 × 2 × … × N`.
+
+**L. Factorial** — [link](https://codeforces.com/group/ooR0BxzUdQ/contest/722898/problem/L)
 
 
-## break — leave the loop now
+---
+
+## break?
 
 `break` ends the loop on the spot:
 
@@ -192,27 +188,6 @@ for (int i = 0; i < 3; i++) {      // [!]   outer
 }                                  // [!]
 ```
 
-
----
-
-
-## Quick check — predict, then I show you
-
-```cpp
-#include <iostream>
-using namespace std;
-int main() {
-    int total = 0;
-    for (int i = 1; i <= 10; i++) {
-        if (i % 2 == 0) continue;
-        total += i;
-    }
-    cout << total;                     // [!]
-    // answer: 25 — add 1, skip 2, add 3, skip 4, add 5   // [!]
-}
-```
-
-
 ---
 
 ## Break
@@ -222,7 +197,7 @@ int main() {
 Next up: `do-while` — and why it exists at all.
 
 ---
-## while — keep going until the condition changes
+## while  keep going until the condition changes
 
 `while` checks the condition **before** the body, every pass:
 
@@ -292,11 +267,10 @@ int main() {
 
 ---
 
-## Break
 
-> Stretch. Breathe. Drink some water.
+## Practice — Wrong Subtraction
 
-Next up: `do-while` — and why it exists at all.
+**R. Wrong Subtraction** — [link](https://codeforces.com/group/ooR0BxzUdQ/contest/722898/problem/R)
 
 ---
 
