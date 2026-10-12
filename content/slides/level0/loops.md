@@ -16,13 +16,7 @@ Hand-written statements stop scaling the moment the count grows. That is the pro
 
 ---
 
-## Two kinds of repetition
-
-Think about it in human words:
-
-- "Do 10 push-ups." — you know the **count**
-- "Walk until you reach the door." — you **don't know when** — you keep going until a condition changes
-- "Try it once; if it fails, try again." — you must do it **at least once**
+## Types of loops
 
 C++ has a loop for each kind of repetition:
 
@@ -43,13 +37,9 @@ Every loop you will ever write has the same four parts:
 3. **step** — what moves toward the end
 4. **body** — the work repeated on each pass
 
-That is the whole theory of loops. Everything else is syntax that names these four parts.
-
-If you cannot name all four parts of a loop, you cannot trust the loop.
-
 ---
 
-## Init, stop, and step — the engine of a for loop
+## Init, stop, and step 
 
 Every `for` loop lives on three choices — the most important parts of the loop:
 
@@ -69,45 +59,39 @@ The three decide everything about the loop:
 
 - `i` visits `0, 1, 2, …, n − 1`
 - so the body runs exactly **n** times
-- change any of the three and the whole loop changes — where it starts, when it stops, how many passes there are
 
 ---
 
-## Be the computer: trace it
+## Off-by-one and the boundary
 
-A trace table is you pretending to be the CPU, one row per pass.
+The difference between right and wrong is often one character:
 
 ```cpp
-for (int i = 0; i < 3; i++) {
-    cout << i << ' ';
-}
+for (int i = 0; i <= n; i++)   // n + 1 passes — usually one too many
+for (int i = 0; i < n; i++)    // exactly n passes — the default
+for (int i = 1; i <= n; i++)   // exactly n passes — when you want 1..n
+
 ```
 
-| pass | `i` before body | `i < 3`? | prints |
-|------|-----------------|---------|--------|
-| 1 | 0 | yes | `0` |
-| 2 | 1 | yes | `1` |
-| 3 | 2 | yes | `2` |
-| 4 | 3 | **no** | — loop ends — |
-
-Trace every loop by hand before you run it. That habit is most of debugging, done in advance.
 
 ---
 
-## The counting loop
 
-The single most typed loop in competitive programming:
+## The sum from 1 to n loop
+
 
 ```cpp
-for (int i = 0; i < n; i++) {
-    // body
+#include <iostream>
+using namespace std;
+int main() {
+    long long sum = 0;
+    for (int i = 1; i <= n; i++) {  // [!]
+        sum += i;                  // [!]
+    }
+    cout << sum;
 }
 ```
 
-Read it out loud: *"i starts at 0; while i is less than n, run the body; then add 1 to i."*
-
-- It runs the body exactly **n** times, with `i = 0, 1, 2, …, n − 1`.
-- CP counts from 0 on purpose — arrays index from 0, as the next topic will show.
 
 ---
 
@@ -133,35 +117,11 @@ int main() {
 }
 ```
 
-The condition is checked **before** the body — so a loop can run zero times. That is normal, not a crash.
+The condition is checked **before** the body  so a loop can run zero times. That is normal, not a crash.
 
 ---
 
-## Read n values — the pattern
 
-Contest input arrives as a count, then that many numbers. Read it with one loop.
-
-```cpp
-#include <iostream>
-using namespace std;
-int main() {
-    int n;
-    cin >> n;                      // [!]
-    long long sum = 0;
-    for (int i = 0; i < n; i++) {  // [!]
-        int x;
-        cin >> x;                  // [!]
-        sum += x;                  // [!]
-    }
-    cout << sum;
-}
-```
-
-- The loop body runs once per input value — read `x`, fold it into `sum`.
-- `sum` is the **accumulator**: it collects every value it sees.
-- `long long` — sums overflow `int` faster than you expect.
-
----
 
 ## break — leave the loop now
 
@@ -190,11 +150,6 @@ for (int i = 0; i < 5; i++) {
     cout << i << ' ';
 }
 ```
-
-Prints `0 1 2 4` — pass 3 is skipped, the loop itself keeps going.
-
-`break` stops the loop. `continue` skips one pass. Caution: code full of `continue` hides the shape of the loop — a clean condition beats a sprinkle of skips.
-
 ---
 
 ## Loops inside loops
@@ -204,103 +159,40 @@ A loop's body can hold another loop. The inner loop runs fully for **every** out
 ```cpp
 for (int i = 0; i < 3; i++) {      // [!]   outer
     for (int j = 0; j < 2; j++)    // [!]   inner
-        cout << i << j << ' ';     // [!]
+                     // [!]
 }                                  // [!]
 ```
 
-Think rows and columns — outer picks the row, inner walks across it:
-
-```
-00 01 10 11 20 21
-```
-
-Read it a pause at a time: `i = 0` prints `00 01`, `i = 1` prints `10 11`, `i = 2` prints `20 21`. The inner loop resets `j` to 0 on every outer pass — that is the whole dance.
 
 ---
 
-## Pattern: sum and count
-
-Two shapes you will reuse every session:
-
-```cpp
-long long sum = 0;
-for (int i = 1; i <= n; i++) sum += i;       // sum of 1..n  // [!]
-
-int cnt = 0;
-for (int i = 1; i <= n; i++)
-    if (n % i == 0) cnt++;                   // count divisors // [!]
-```
-
-- Both are a **counter** updated inside the body — only the update differs (`sum += i` vs `cnt++`).
-- `long long`: `1..n` overflows `int` once `n` passes ~65,000. Topic 1's table warned you.
-
----
-
-## Pattern: best so far
-
-Max or min while scanning — keep a champion.
-
-```cpp
-#include <iostream>
-using namespace std;
-int main() {
-    int n; cin >> n;
-    int best; cin >> best;               // [!]   seed with the first value
-    for (int i = 1; i < n; i++) {        // [!]
-        int x; cin >> x;
-        if (x > best) best = x;          // [!]   beat the champion
-    }
-    cout << best;
-}
-```
-
-- Seed `best` with the **first** value — never `0`. The input may be negative, and then 0 would win forever.
-- Every new value either beats the champion or is ignored. Tournament logic, nothing more.
-
----
-
-## Off-by-one and the boundary
-
-The difference between right and wrong is often one character:
-
-```cpp
-for (int i = 0; i <= n; i++)   // n + 1 passes — usually one too many
-for (int i = 0; i < n; i++)    // exactly n passes — the default
-for (int i = 1; i <= n; i++)   // exactly n passes — when you want 1..n
-```
-
-```cpp
-for (int i = 0; i < n; i++) {       // [!]
-    cout << (i + 1) << ' ';         // [!]   1..n with a 0-based loop
-}
-```
-
-Have a check ritual before submitting: the **first** pass, the **last** pass, and `n = 0`. Get those three right and the middle takes care of itself.
-
----
 
 ## Quick check — predict, then I show you
-
-The whole toolbox in one loop. Predict the output.
 
 ```cpp
 #include <iostream>
 using namespace std;
 int main() {
     int total = 0;
-    for (int i = 1; i <= 5; i++) {
+    for (int i = 1; i <= 10; i++) {
         if (i % 2 == 0) continue;
         total += i;
     }
     cout << total;                     // [!]
-    // answer: 9 — add 1, skip 2, add 3, skip 4, add 5   // [!]
+    // answer: 25 — add 1, skip 2, add 3, skip 4, add 5   // [!]
 }
 ```
 
-Trace it aloud: `continue` skips even `i`, so only 1, 3, 5 reach `total`.
 
 ---
 
+## Break
+
+> Stretch. Breathe. Drink some water.
+
+Next up: `do-while` — and why it exists at all.
+
+---
 ## while — keep going until the condition changes
 
 `while` checks the condition **before** the body, every pass:
@@ -348,13 +240,10 @@ for (int i = 0; i < n; i++) {
 
 Both print `0 1 2 … n − 1`.
 
-`for` wins when the three parts fit on one line — you see the whole promise at once. `while` wins when you do not yet know the count.
 
 ---
 
 ## The digit loop
-
-The first loop that feels like real programming. A number is a pile of digits.
 
 ```cpp
 #include <iostream>
@@ -369,7 +258,7 @@ int main() {
 }
 ```
 
-- `x % 10` peels the **last digit** — hello again, topic 1.
+- `x % 10` peels the **last digit**
 - `x /= 10` is the **step**. Watch it: `x` shrinks every pass, so the condition `x > 0` is guaranteed to end the loop. You know *why* this loop terminates.
 
 ---
@@ -393,9 +282,6 @@ do {
 ```
 
 - The body always runs at least once.
-- The `;` after `while (...)` is required — this is the one loop whose `while` ends with a semicolon.
-
-Difference in one sentence: `while` asks before, `do-while` acts before asking.
 
 ---
 
