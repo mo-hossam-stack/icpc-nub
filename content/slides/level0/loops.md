@@ -1,3 +1,32 @@
+## Last time on the path
+
+> A quick look back before we move forward.
+
+- A **problem** becomes an **algorithm**, and an algorithm becomes **code**.
+- The **compiler** translates your words into the 0s and 1s the CPU runs.
+- You wrote your first C++ program: `#include`, `main`, `cout`.
+
+---
+
+## The toolkit you already hold
+
+- **Types** — `int`, `long long`,`float`, `double`, `char`, `string`, `bool` ;
+- **Input / output** — `cin >> x`, `cout << x`, `'endl'` for a new line.
+- **Operators** — `+ - * / %`, and `%` hands you the last digit and even / odd.
+- **Decisions** — `if`, `else if`, `else` branch your program on a condition.
+
+---
+
+## But your program still does one thing
+
+> Every line you wrote runs **once**, top to bottom, and stops.
+
+- Print `1`, `2`, `3`? Three lines.
+- Print `1` to `1000`? A thousand lines.
+- That wall is exactly where today begins — how to make the computer **repeat** work for you.
+
+---
+
 ## Doing it once vs doing it again
 
 Print the numbers 1 to 5 — the obvious way:
