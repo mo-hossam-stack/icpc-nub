@@ -49,6 +49,8 @@ export const levels: Level[] = [
           session:
             'https://nubedu-my.sharepoint.com/:v:/g/personal/m_hossam1050_nub_edu_eg/IQAGuUED_ZAGR73oC6bVszoTAU4sp-vRMRvBkGm4Ah96BnI?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=QvLxek',
           sheet: 'https://codeforces.com/group/ooR0BxzUdQ/contest/718168',
+          upsolve:
+            'https://nubedu-my.sharepoint.com/:v:/g/personal/mazen_ahmed1060_nub_edu_eg/IQAs-JV2nPV9TbUXlp8oE7uiASUJrLeE4gsT4PrQNIfzkeg?e=80o7xQ&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D',
         },
       },
       {
@@ -58,7 +60,11 @@ export const levels: Level[] = [
         blurb: 'for, while, do-while — and when to reach for which one.',
         tags: ['for', 'while', 'nested loops'],
         status: 'open',
-        links: {},
+        links: {
+          session:
+            'https://nubedu-my.sharepoint.com/:v:/g/personal/a_mahmoud1060_nub_edu_eg/IQBQhrkl78L_SYEq1VvmRa1AAQsQzJyn74ozqfsp37q7nJs?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=Lwtdai',
+          sheet: 'https://codeforces.com/group/ooR0BxzUdQ/contest/722898',
+        },
       },
       {
         id: 'arrays',
